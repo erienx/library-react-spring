@@ -20,8 +20,8 @@ public class Author {
 
     private String authorName;
 
-
-    @ManyToMany(mappedBy = "authors")
     @JsonIgnore
+    @OneToMany(mappedBy = "author")
     private List<Book> books;
 }
+

@@ -37,15 +37,11 @@ public class Book {
     @JoinColumn(name = "categoryID", nullable = false)
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "authorID", nullable = false)
+    private Author author;
+
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookCopy> bookCopies;
-
-    @ManyToMany
-    @JoinTable(
-            name = "book_to_author",
-            joinColumns = @JoinColumn(name = "bookID"),
-            inverseJoinColumns = @JoinColumn(name = "authorID")
-    )
-    private List<Author> authors;
-
 }
+

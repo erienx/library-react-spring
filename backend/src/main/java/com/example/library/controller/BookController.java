@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @PostMapping
-    public Book createBook(@RequestBody Book book) {
+    public Book uploadBook(@RequestBody Book book) {
         return bookRepository.save(book);
     }
 
@@ -42,7 +42,6 @@ public class BookController {
             book.setPublisher(bookDetails.getPublisher());
             book.setCategory(bookDetails.getCategory());
             book.setBookCopies(bookDetails.getBookCopies());
-            book.setAuthors(bookDetails.getAuthors());
             return ResponseEntity.ok(bookRepository.save(book));
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }

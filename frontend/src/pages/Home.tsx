@@ -12,18 +12,21 @@ const Home = () => {
       const debouncedSearchInp = useDebounce(searchInp, 1000);
       const {books,errorMsg,isLoading} = useFetchBooks(debouncedSearchInp);
     const getContent = () => {
-        if (isLoading) return <Spinner/>;
+        if (isLoading || books==null) return <Spinner/>;
         if (errorMsg){
           return (
             <div className="flex justify-center items-center">
             <h3 className="text-3xl text-red-500">{errorMsg}</h3>
             </div>)
         }
-        if (books.length===0){
+        if (!isLoading && searchInp && books.length === 0){
           return (
             <div className="flex justify-center items-center">
             <h3 className="text-3xl text-white">No books found</h3>
             </div>)
+        }
+        if (books.length==0){
+          return <Spinner/>
         }
         return (
         <ul className='grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>

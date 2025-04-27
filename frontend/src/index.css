@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #333537;
+  --color-bg-lighter: #3d3d3f;
+  --color-bg-lighter2: #4b4b4e;
+
+  --color-light-100: #ffffff;
+  --color-txt: white;
+
+  --color-txt-darker: #e6e6e6;
+  --color-dark-100: #0f0d23;
+
+  --color-accent1: #43c6ac;
+  --color-accent1-hover: #36b097;
+  --color-accent1-lighter: #c4ede5;
+
+  --color-accent2: oklch(90.5% 0.182 98.111);
+  --color-accent2-hover: oklch(94.5% 0.129 101.54);
+
+  --font-dm-sans: DM Sans, sans-serif;
+
+  --breakpoint-xs: 480px;
+
+}
+
+@layer base {
+  body {
+    font-family: "DM Sans", serif;
+    font-optical-sizing: auto;
+    background: var(--color-bg);
+  }
+  div{
+    @apply text-white;
+  }
+  header{
+    @apply bg-[#313335] shadow-2xl shadow-black/50;
+  }
+  main {
+    @apply relative bg-bg;
+  }
+  p{
+    @apply text-light-100
+  }
+}
+
+@layer components {
+
+  .regular-text{
+    @apply text-sm sm:text-lg text-[#ffffff];
+  }
+}
+
+@layer utilities {
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.4s ease-out;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .text-gradient-header {
+    @apply bg-linear-to-r from-[#bac57a] to-[#e2aa11] bg-clip-text text-transparent;
+  }
+  .fancy-text {
+    -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
+    font-size: 190px;
+    font-family: "Bebas Neue", sans-serif;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+
+

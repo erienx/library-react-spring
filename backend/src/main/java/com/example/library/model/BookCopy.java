@@ -1,0 +1,23 @@
+package com.example.library.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "book_copy")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class BookCopy {
+    @Id
+    @GeneratedValue
+    private Long bookCopyID;
+
+    @Builder.Default
+    private boolean isRented = false;
+
+    @ManyToOne
+    @JoinColumn(name = "bookID", nullable = false)
+    private Book book;
+}

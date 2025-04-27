@@ -27,6 +27,9 @@ public class Book {
     private String pathToCover;
 
     @Builder.Default
+    private Double rating = 0.0;
+
+    @Builder.Default
     private Integer rentedCount = 0;
 
     @ManyToOne

@@ -1,10 +1,13 @@
 package com.example.library.controller;
 
+import com.example.library.dto.BookUploadRequest;
 import com.example.library.model.*;
 import com.example.library.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,12 @@ import java.util.Optional;
 public class BookController {
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private PublisherRepository publisherRepository;
 
     @GetMapping
     public List<Book> getAllBooks() {
@@ -26,7 +35,28 @@ public class BookController {
     }
 
     @PostMapping
-    public Book uploadBook(@RequestBody Book book) {
+    public Book uploadBook(@RequestBody BookUploadRequest bookRequest) {
+        Author author = authorRepository.findByAuthorName(bookRequest.author())
+                .orElseGet(() -> authorRepository.save(Author.builder().authorName(bookRequest.author()).build()));
+
+        Category cat = categoryRepository.findByCategoryName(bookRequest.category())
+                .orElseGet(() -> categoryRepository.save(Category.builder().categoryName(bookRequest.category()).build()));
+
+        Publisher publisher = (Publisher) publisherRepository.findByPublisherName(bookRequest.publisher())
+                .orElseGet(() -> publisherRepository.save(Publisher.builder().publisherName(bookRequest.publisher()).build()));
+
+        Book book = Book.builder()
+                .title(bookRequest.title())
+                .publicationDate(LocalDate.ofEpochDay(bookRequest.publicationDate()))
+                .author(author)
+                .category(cat)
+                .rating(bookRequest.rating())
+                .publisher(publisher)
+                .pathToCover(bookRequest.pathToCover())
+                .pages(bookRequest.pages())
+                .rentedCount(bookRequest.rentedCount())
+                .build();
+
         return bookRepository.save(book);
     }
 

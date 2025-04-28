@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Book } from "../types/types";
-import  Rating  from "./ui/Rating";
+import Rating from "./ui/Rating";
 import FullStarIcon from "../assets/stars/star-full-icon.svg?react"
 import useFetchBooksByCategoryApi from "../hooks/api/useFetchBooksByCategoryApi";
 import DisplayBookCards from "./DisplayBookCards";
@@ -11,25 +11,33 @@ type BookDetailsProps = {
   book: Book;
 };
 
-const BookDetails = ({ book}: BookDetailsProps) => {
+const BookDetails = ({ book }: BookDetailsProps) => {
   const { books: similarBooks, errorMsg: similarError, isLoading: isSimilarLoading } = useFetchBooksByCategoryApi(book.category.categoryID, 9);
   const isPopular = book.rentedCount > 100;
 
-  
+
   return (
-    <div className="flex flex-col gap-20   p-10 max-w-7xl mx-auto">
+    <div className="flex flex-col gap-20 p-10 max-w-7xl mx-auto">
 
       <div className="flex flex-col lg:flex-row gap-10 p-8 bg-gradient-to-t from-bg to-bg-lighter shadow-lg shadow-black/25 rounded-2xl">
 
-        <div className="relative flex-shrink-0 w-full lg:w-1/3">
+        <div className="relative flex-shrink-0 w-full lg:w-1/3 min-h-[400px] md:min-h-[650px] flex items-center justify-center bg-bg-lighter rounded-2xl">
           {isPopular && (
-            <div className="absolute -top-3 -left-3 bg-gradient-to-r from-accent2 to-accent2-hover filter saturate-80 text-bg px-3 py-1 rounded-tr-xl rounded-bl-xl text-xs font-bold shadow-md flex flex-row gap-x-1 items-center">
+            <div className="absolute -top-5 -left-5 bg-gradient-to-r from-accent2 to-accent2-hover filter saturate-80 text-bg px-3 py-1 rounded-tr-xl rounded-bl-xl text-xs font-bold shadow-md flex flex-row gap-x-1 items-center">
               <FullStarIcon /> Popular Choice
             </div>
           )}
-          <img src={book.pathToCover ? book.pathToCover : '/no-img.png'} alt={`cover of ${book.title}`}
-            className="rounded-2xl shadow-2xl shadow-black/20 w-full h-auto object-cover"/>
+
+          <div className="overflow-hidden rounded-2xl w-full h-full flex items-center justify-center">
+            <img
+              src={book.pathToCover ? book.pathToCover : '/no-img.png'}
+              alt={`cover of ${book.title}`}
+              className="w-full h-full object-cover"
+            />
+
+          </div>
         </div>
+
 
 
         {/* info section */}
@@ -91,15 +99,15 @@ const BookDetails = ({ book}: BookDetailsProps) => {
 
         {isSimilarLoading ? (
           <>
-            <DummyLoadingCards/>
-            <Spinner/>
+            <DummyLoadingCards />
+            <Spinner />
           </>
         ) : similarError ? (
           <p className="text-red-400">{similarError}</p>
         ) : similarBooks.length === 0 ? (
           <p className="text-gray-300 text-3xl mt-8">No books found :(</p>
         ) : (
-          <DisplayBookCards books= {similarBooks.filter((b) => b.bookID != book.bookID)}/>
+          <DisplayBookCards books={similarBooks.filter((b) => b.bookID != book.bookID)} />
         )}
       </div>
     </div>

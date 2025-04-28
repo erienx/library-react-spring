@@ -22,13 +22,13 @@ const BookCard = ({book}: BookCardProps) => {
               <p className='text-gray-300'>
                 Rented <span className='text-white font-bold'>{book.rentedCount}</span> times
               </p>
+                
+              <span className='text-sm text-slate-200'>•</span>
       
-              <span className='text-sm text-gray-100'>•</span>
-      
-                <FullStarIcon/>
+                <FullStarIcon className="text-accent2 saturate-85"/>
                 <p className="text-white font-bold">{book.rating}</p>
 
-                <span className='text-sm text-gray-100'>•</span>
+                <span className='text-sm text-slate-200'>•</span>
                 <p className='text-white font-bold'>{book.publicationYear}</p>
             </div>
           </div>

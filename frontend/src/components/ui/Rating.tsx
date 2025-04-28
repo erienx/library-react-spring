@@ -9,9 +9,9 @@ const Rating = ({ rating }: { rating: number }) => {
     const hasEmptyStar = (rating % 1) >= 0.5;
     const emptyStars = 5 - fullStars - (hasEmptyStar ? 1 : 0);
     for (let i = 0; i < fullStars; i++)
-        stars.push(<StarFullIcon />);
+        stars.push(<StarFullIcon className="text-accent2 saturate-85"/>);
     if (hasEmptyStar)
-        stars.push(<StarHalfIcon />);
+        stars.push(<StarHalfIcon className="text-accent2 saturate-85"/>);
     for (let i = 0; i < emptyStars; i++)
         stars.push(<StarEmptyIcon />)
 

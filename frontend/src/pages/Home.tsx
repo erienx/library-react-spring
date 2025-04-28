@@ -6,6 +6,7 @@ import useDebounce from '../hooks/useDebounce';
 import useFetchBooksApi from '../hooks/api/useFetchBooksApi';
 import FeaturesInfo from '../components/FeaturesInfo';
 import DisplayBookCards from '../components/DisplayBookCards';
+import DummyLoadingCards from '../components/ui/DummyLoadingCards';
 
 
 const Home = () => {
@@ -13,7 +14,12 @@ const Home = () => {
       const debouncedSearchInp = useDebounce(searchInp, 1000);
       const {books,errorMsg,isLoading} = useFetchBooksApi(debouncedSearchInp);
     const getContent = () => {
-        if (isLoading || books==null) return <Spinner/>;
+        if (isLoading || books==null) {
+          return <>
+            <DummyLoadingCards/>
+            <Spinner/>
+          </>
+        };
         if (errorMsg){
           return (
             <div className="flex justify-center items-center">
@@ -25,9 +31,6 @@ const Home = () => {
             <div className="flex justify-center items-center">
             <h3 className="text-3xl text-white">No books found</h3>
             </div>)
-        }
-        if (books.length==0){
-          return <Spinner/>
         }
         return (
           <DisplayBookCards books= {books}/>

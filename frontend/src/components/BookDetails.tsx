@@ -4,6 +4,8 @@ import  Rating  from "./ui/Rating";
 import FullStarIcon from "../assets/stars/star-full-icon.svg?react"
 import useFetchBooksByCategoryApi from "../hooks/api/useFetchBooksByCategoryApi";
 import DisplayBookCards from "./DisplayBookCards";
+import DummyLoadingCards from "./ui/DummyLoadingCards";
+import Spinner from "../components/ui/Spinner";
 
 type BookDetailsProps = {
   book: Book;
@@ -30,8 +32,8 @@ const BookDetails = ({ book}: BookDetailsProps) => {
         </div>
 
 
-        {/* info div */}
-        <div className="flex flex-col flex-grow gap-6">
+        {/* info section */}
+        <section className="flex flex-col flex-grow gap-6">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">{book.title}</h1>
             <Link to={`/author/${book.author.authorID}`} className="text-xl text-accent2 hover:underline">
@@ -80,7 +82,7 @@ const BookDetails = ({ book}: BookDetailsProps) => {
               Add to Cart
             </Link>
           </div>
-        </div>
+        </section>
       </div>
 
 
@@ -88,11 +90,10 @@ const BookDetails = ({ book}: BookDetailsProps) => {
         <h2 className="text-4xl font-light text-white">More from <span className="font-bold text-gradient-header">{book.category.categoryName}</span> category</h2>
 
         {isSimilarLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <div key={index} className="bg-gradient-to-t from-bg to-bg-lighter p-4 rounded-xl animate-pulse h-72" />
-            ))}
-          </div>
+          <>
+            <DummyLoadingCards/>
+            <Spinner/>
+          </>
         ) : similarError ? (
           <p className="text-red-400">{similarError}</p>
         ) : similarBooks.length === 0 ? (

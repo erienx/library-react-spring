@@ -79,7 +79,7 @@
     display: none;
   }
   .text-gradient-header {
-    @apply bg-linear-to-r from-[#bac57a] to-[#e2aa11] bg-clip-text text-transparent;
+    @apply bg-linear-to-r from-accent1 to-accent1-hover/75 bg-clip-text text-transparent;
   }
   .fancy-text {
     -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);

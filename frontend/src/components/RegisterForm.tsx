@@ -43,7 +43,7 @@ export const RegisterForm = () => {
     const emailValue = watch("email");
     const passwordValue = watch("password");
     const confirmPasswordValue = watch("confirmPassword");
-    
+
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {

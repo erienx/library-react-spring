@@ -35,9 +35,9 @@ const router = createBrowserRouter([
       },
       {
         path: 'admin',
-        element: (<ProtectedRoute  allowedRoles={['admin']}>
-                    <AdminPage/>
-                  </ProtectedRoute>)
+        element: (<ProtectedRoute allowedRoles={['admin']}>
+          <AdminPage />
+        </ProtectedRoute>)
       },
       {
         path: 'book/:title/:id',
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'cart',
-        element: <CartPage/>
+        element: <CartPage />
       }
 
     ]

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FieldError } from "react-hook-form";
 
 const useInputState = (initialValue?: string, error?: FieldError) => {

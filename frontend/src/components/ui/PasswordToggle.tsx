@@ -12,7 +12,7 @@ const PasswordToggle = ({ show, toggle }: ToggleType) => {
             onClick={toggle}
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-blue-600"
             tabIndex={-1}>
-            {show ? <EyeClosed color = "white" fontSize={18} /> : <EyeOpen color = "white" fontSize={18} />}
+            {show ? <EyeClosed color="white" fontSize={18} /> : <EyeOpen color="white" fontSize={18} />}
         </button>
     )
 }

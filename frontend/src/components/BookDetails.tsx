@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import { Book } from "../types/types";
-import Rating from "./ui/Rating";
 import useFetchBooksByCategoryApi from "../hooks/api/useFetchBooksByCategoryApi";
 import DisplayBookCards from "./DisplayBookCards";
 import DummyLoadingCards from "./ui/DummyLoadingCards";

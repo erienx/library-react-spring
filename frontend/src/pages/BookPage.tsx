@@ -5,25 +5,25 @@ import BookDetails from "../components/BookDetails";
 
 export const BookPage = () => {
     const params = useParams<{ title: string, id: string }>();
-    const {book, errorMsg, isLoading} = useFetchSingleBookApi(params.id);
+    const { book, errorMsg, isLoading } = useFetchSingleBookApi(params.id);
 
     const getContent = () => {
         if (isLoading) {
-            return <Spinner/>;
+            return <Spinner />;
         }
-        if (errorMsg){
-          return (
-            <div className="flex justify-center items-center">
-            <h3 className="text-3xl text-red-500">{errorMsg}</h3>
-            </div>)
+        if (errorMsg) {
+            return (
+                <div className="flex justify-center items-center">
+                    <h3 className="text-3xl text-red-500">{errorMsg}</h3>
+                </div>)
         }
-        if (book == null){
-          return (
-            <div className="flex justify-center items-center">
-            <h3 className="text-3xl text-white">Book not found</h3>
-            </div>)
+        if (book == null) {
+            return (
+                <div className="flex justify-center items-center">
+                    <h3 className="text-3xl text-white">Book not found</h3>
+                </div>)
         }
-        return ( <BookDetails book={book}/> )
+        return (<BookDetails book={book} />)
     }
 
     return (

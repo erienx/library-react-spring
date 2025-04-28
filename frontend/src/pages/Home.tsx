@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import Search from '../components/ui/Search';
 import Spinner from '../components/ui/Spinner';
 import HeroSection from '../components/ui/HeroSection';
@@ -10,32 +10,32 @@ import DummyLoadingCards from '../components/ui/DummyLoadingCards';
 
 
 const Home = () => {
-      const [searchInp, setSearchInp] = useState('');
-      const debouncedSearchInp = useDebounce(searchInp, 1000);
-      const {books,errorMsg,isLoading} = useFetchBooksApi(debouncedSearchInp);
-    const getContent = () => {
-        if (isLoading || books==null) {
-          return <>
-            <DummyLoadingCards/>
-            <Spinner/>
-          </>
-        };
-        if (errorMsg){
-          return (
-            <div className="flex justify-center items-center">
-            <h3 className="text-3xl text-red-500">{errorMsg}</h3>
-            </div>)
-        }
-        if (!isLoading && searchInp && books.length === 0){
-          return (
-            <div className="flex justify-center items-center">
-            <h3 className="text-3xl text-white">No books found</h3>
-            </div>)
-        }
-        return (
-          <DisplayBookCards books= {books}/>
-        )
+  const [searchInp, setSearchInp] = useState('');
+  const debouncedSearchInp = useDebounce(searchInp, 1000);
+  const { books, errorMsg, isLoading } = useFetchBooksApi(debouncedSearchInp);
+  const getContent = () => {
+    if (isLoading || books == null) {
+      return <>
+        <DummyLoadingCards />
+        <Spinner />
+      </>
+    };
+    if (errorMsg) {
+      return (
+        <div className="flex justify-center items-center">
+          <h3 className="text-3xl text-red-500">{errorMsg}</h3>
+        </div>)
     }
+    if (!isLoading && searchInp && books.length === 0) {
+      return (
+        <div className="flex justify-center items-center">
+          <h3 className="text-3xl text-white">No books found</h3>
+        </div>)
+    }
+    return (
+      <DisplayBookCards books={books} />
+    )
+  }
 
   return (
     <div className="bg-pattern w-full min-h-screen bg-center bg-cover overflow-x-hidden">
@@ -48,7 +48,7 @@ const Home = () => {
           </h2>
           {getContent()}
         </section>
-        <FeaturesInfo/>
+        <FeaturesInfo />
       </div>
     </div>
   )

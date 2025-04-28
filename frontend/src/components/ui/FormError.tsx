@@ -1,7 +1,7 @@
 
 type FormType = {
     error?: { message?: string };
-  };
+};
 
 const FormError = ({ error }: FormType) => {
     return (

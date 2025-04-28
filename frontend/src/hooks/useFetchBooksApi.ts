@@ -13,7 +13,8 @@ const useFetchBooksApi = (value: string) => {
         const fetchData = async (value = '') => {
           setIsLoading(true);
           try {
-            const url = "http://localhost:8080/books";
+            const url = value ? `http://localhost:8080/books?search=${value}` : "http://localhost:8080/books";
+
       
             console.log(url); 
             const res = await fetch(url, { signal: controller.signal });

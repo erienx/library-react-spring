@@ -12,7 +12,7 @@ import RegisterPage from './pages/RegisterPage.tsx'
 import AuthProvider from './components/providers/AuthProvider.tsx'
 import ProtectedRoute from './components/providers/ProtectedRoute.tsx'
 import AdminPage from './pages/AdminPage.tsx'
-import { ItemPage } from './pages/ItemPage.tsx'
+import { BookPage } from './pages/BookPage.tsx'
 import CartPage from './pages/CartPage.tsx'
 import Home from './pages/Home.tsx'
 
@@ -40,8 +40,8 @@ const router = createBrowserRouter([
                   </ProtectedRoute>)
       },
       {
-        path: 'item/id/:query', 
-        element: <ItemPage />
+        path: 'book/search/:query',
+    element: <BookPage />,
       },
       {
         path: 'cart',

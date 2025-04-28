@@ -16,7 +16,7 @@ const Rating = ({ rating }: { rating: number }) => {
         stars.push(<StarEmptyIcon />)
 
     return (
-        <div className="flex flex-row items-center justify-center gap-x-2">
+        <div className="flex flex-row gap-x-2">
             {stars.map((star, index) => { 
                 return <span key = {index}>{star}</span>
             }) }

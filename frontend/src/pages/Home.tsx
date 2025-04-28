@@ -4,7 +4,7 @@ import Spinner from '../components/ui/Spinner';
 import BookCard from '../components/BookCard';
 import HeroSection from '../components/HeroSection';
 import useDebounce from '../hooks/useDebounce';
-import useFetchBooksApi from '../hooks/useFetchBooksApi';
+import useFetchBooksApi from '../hooks/api/useFetchBooksApi';
 import FeaturesInfo from '../components/FeaturesInfo';
 import { Book } from '../types/types';
 

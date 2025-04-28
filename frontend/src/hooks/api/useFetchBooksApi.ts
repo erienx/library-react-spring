@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetchBooks = (value: string) => {
+const useFetchBooksApi = (value: string) => {
     const [books, setBooks] = useState([]);
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -13,18 +13,15 @@ const useFetchBooks = (value: string) => {
         const fetchData = async (value = '') => {
           setIsLoading(true);
           try {
-            const url = value
-      ? `/search.json?title=${encodeURIComponent(value)}`
-      : "/trending/weekly.json";
+            const url = value ? `http://localhost:8080/books?search=${value}` : "http://localhost:8080/books";
+
       
-            console.log(url); 
             const res = await fetch(url, { signal: controller.signal });
             if (!res.ok) {
               throw new Error("Books fetch failed.");
             }
       
             let data = await res.json();
-            data = value ? data.docs : data.works;
       
             if (!data) {
               setErrorMsg("No books found.");
@@ -53,4 +50,4 @@ const useFetchBooks = (value: string) => {
       return {books,errorMsg,isLoading}
 }
 
-export default useFetchBooks;
+export default useFetchBooksApi;

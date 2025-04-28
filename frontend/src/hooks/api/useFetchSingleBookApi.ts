@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { Book } from "../../types/types";
 
-const useFetchBooksApi = (value: string) => {
-    const [books, setBooks] = useState([]);
+
+const useFetchSingleBookApi = (id: string | undefined) => {
+    const [book, setBook] = useState<Book | null>(null);
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
@@ -10,13 +12,12 @@ const useFetchBooksApi = (value: string) => {
     useEffect(() => {
         const controller = new AbortController();
     
-        const fetchData = async (value = '') => {
+        const fetchData = async () => {
           setIsLoading(true);
           try {
-            const url = value ? `http://localhost:8080/books?search=${value}` : "http://localhost:8080/books";
+            const url = `http://localhost:8080/books/${id}`;
 
       
-            console.log(url); 
             const res = await fetch(url, { signal: controller.signal });
             if (!res.ok) {
               throw new Error("Books fetch failed.");
@@ -26,29 +27,29 @@ const useFetchBooksApi = (value: string) => {
       
             if (!data) {
               setErrorMsg("No books found.");
-              setBooks([]);
+              setBook(null);
               return;
             }
       
-            setBooks(data);  
+            setBook(data);  
           }
           catch (error: any) {
             if (error.name !== "AbortError") {
               setErrorMsg("Error fetching books.");
-              setBooks([]); 
+              setBook(null); 
             }
           } finally {
             setIsLoading(false);
           }
         };
     
-        fetchData(value);
+        fetchData();
         return () => {
           controller.abort();
         };
-      }, [value]);
+      }, [id]);
 
-      return {books,errorMsg,isLoading}
+      return {book,errorMsg,isLoading}
 }
 
-export default useFetchBooksApi;
+export default useFetchSingleBookApi;

@@ -57,7 +57,7 @@ const uploadAllBooks = async () => {
       publicationYear: book.first_publish_year || 0,
       author: book.author_name ? book.author_name[0] : "Unknown",
       pathToCover: book.cover_edition_key 
-        ? `https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`
+        ? `https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-L.jpg`
         : "",
       pages: Math.floor(Math.random()*800+300),
       rentedCount: Math.floor(Math.random()*200),

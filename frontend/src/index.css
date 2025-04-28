@@ -37,9 +37,6 @@
   div{
     @apply text-white;
   }
-  header{
-    @apply bg-[#313335] shadow-2xl shadow-black/50;
-  }
   main {
     @apply relative bg-bg;
   }

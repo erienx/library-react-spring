@@ -16,11 +16,11 @@ const Rating = ({ rating }: { rating: number }) => {
         stars.push(<StarEmptyIcon />)
 
     return (
-        <div className="flex flex-row gap-x-2">
+        <div className="flex flex-row gap-x-2 items-center">
             {stars.map((star, index) => { 
                 return <span key = {index}>{star}</span>
             }) }
-            <p className="font-bold text-dark">{rating ? rating : "N/A"}</p>
+            <span className="text-white font-semibold text-lg">{rating.toFixed(1)} / 5</span>
         </div>
     )
 }

@@ -40,7 +40,7 @@ const router = createBrowserRouter([
                   </ProtectedRoute>)
       },
       {
-        path: 'book/search/:query',
+        path: 'book/:title/:id',
         element: <BookPage />,
       },
       {

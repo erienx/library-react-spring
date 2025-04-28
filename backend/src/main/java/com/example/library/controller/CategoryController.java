@@ -14,10 +14,6 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @PostMapping
-    public Category createCategory(@RequestBody Category category) {
-        return categoryRepository.save(category);
-    }
 
     @GetMapping
     public List<Category> getAllCategories() {

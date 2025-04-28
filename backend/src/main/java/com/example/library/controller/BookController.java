@@ -4,6 +4,8 @@ import com.example.library.dto.BookUploadRequest;
 import com.example.library.model.*;
 import com.example.library.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +38,12 @@ public class BookController {
         Optional<Book> book = bookRepository.findById(id);
         return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/category/{id}")
+    public Page<Book> getBooksByCategoryId(@PathVariable Long id, Pageable pageable) {
+        return bookRepository.findByCategoryCategoryID(id, pageable);
+    }
+
 
     @PostMapping
     public Book uploadBook(@RequestBody BookUploadRequest bookRequest) {
@@ -78,6 +86,7 @@ public class BookController {
             return ResponseEntity.ok(bookRepository.save(book));
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteBook(@PathVariable Long id) {

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import CartIcon from "../assets/cart-icon.svg?react"
+import CartIcon from "../../assets/cart-icon.svg?react"
 import { useAuth } from "../providers/AuthProvider";
 import { useHasAccess } from "../../hooks/useHasAccess";
 

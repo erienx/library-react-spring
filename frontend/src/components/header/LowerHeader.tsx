@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import LogoIcon from '../assets/logo-icon.svg?react';
+import LogoIcon from '../../assets/logo-icon.svg?react';
 
 const LowerHeader = () => {
   const options = [
@@ -26,7 +26,7 @@ const LowerHeader = () => {
 
         <nav className="flex gap-6 sm:gap-10 lg:gap-16 items-center ">
           {options.map((opt, index) => ( //index is fine as a key cause static array
-            <NavLink key = {index} to={opt.path}
+            <NavLink key={index} to={opt.path}
               className={({ isActive }) =>
                 `text-2xl sm:text-3xl transition-all duration-150 ${isActive ? "text-txt underline" : "text-txt-darker hover:text-txt"}`}
             >{opt.text}</NavLink>

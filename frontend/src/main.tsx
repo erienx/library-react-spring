@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'book/search/:query',
-    element: <BookPage />,
+        element: <BookPage />,
       },
       {
         path: 'cart',

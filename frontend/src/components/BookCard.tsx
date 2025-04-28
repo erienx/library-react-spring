@@ -1,5 +1,6 @@
 import {Book} from "../types/types"
 import FullStarIcon from "../assets/stars/star-full-icon.svg?react";
+import { Link } from "react-router-dom";
 
 type BookCardProps={
     book: Book;
@@ -7,7 +8,7 @@ type BookCardProps={
 
 const BookCard = ({book}: BookCardProps) => {
     return (
-        <div className="bg-gradient-to-t from-bg to-bg-lighter p-5 rounded-2xl shadow-lg shadow-black/25 flex flex-col cursor-pointer hover:scale-102 transition-all duration-400 hover:shadow-black/40 hover:from-bg hover:to-bg-lighter2">
+        <Link to={`book/search/${book.title}`} className="bg-gradient-to-t from-bg to-bg-lighter p-5 rounded-2xl shadow-lg shadow-black/25 flex flex-col hover:scale-102 transition-all duration-400 hover:shadow-black/40 hover:from-bg hover:to-bg-lighter2">
           <img 
             className="rounded-lg h-auto w-auto max-h-[300px]"
             src={book.pathToCover ? book.pathToCover : '/no-img.png'} 
@@ -26,13 +27,13 @@ const BookCard = ({book}: BookCardProps) => {
               <span className='text-sm text-slate-200'>•</span>
       
                 <FullStarIcon className="text-accent2 saturate-85"/>
-                <p className="text-white font-bold">{book.rating}</p>
+                <p className="text-white font-bold">{book.rating.toFixed(1)}</p>
 
                 <span className='text-sm text-slate-200'>•</span>
                 <p className='text-white font-bold'>{book.publicationYear}</p>
             </div>
           </div>
-        </div>
+        </Link>
       );
 }
 

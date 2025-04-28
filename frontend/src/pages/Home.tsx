@@ -1,12 +1,11 @@
 import  { useState } from 'react';
 import Search from '../components/ui/Search';
 import Spinner from '../components/ui/Spinner';
-import BookCard from '../components/BookCard';
-import HeroSection from '../components/HeroSection';
+import HeroSection from '../components/ui/HeroSection';
 import useDebounce from '../hooks/useDebounce';
 import useFetchBooksApi from '../hooks/api/useFetchBooksApi';
 import FeaturesInfo from '../components/FeaturesInfo';
-import { Book } from '../types/types';
+import DisplayBookCards from '../components/DisplayBookCards';
 
 
 const Home = () => {
@@ -31,11 +30,8 @@ const Home = () => {
           return <Spinner/>
         }
         return (
-        <ul className='grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-          {books.map((book: Book) => {
-              return <BookCard key={book.bookID} book = {book}/>
-          })}
-        </ul>)
+          <DisplayBookCards books= {books}/>
+        )
     }
 
   return (

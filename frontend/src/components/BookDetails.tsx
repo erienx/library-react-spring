@@ -2,22 +2,26 @@ import { Link } from "react-router-dom";
 import { Book } from "../types/types";
 import  Rating  from "./ui/Rating";
 import FullStarIcon from "../assets/stars/star-full-icon.svg?react"
+import useFetchBooksByCategoryApi from "../hooks/api/useFetchBooksByCategoryApi";
+import DisplayBookCards from "./DisplayBookCards";
 
 type BookDetailsProps = {
   book: Book;
 };
 
 const BookDetails = ({ book}: BookDetailsProps) => {
-  const isPopular = book.rentedCount > 40;
+  const { books: similarBooks, errorMsg: similarError, isLoading: isSimilarLoading } = useFetchBooksByCategoryApi(book.category.categoryID, 9);
+  const isPopular = book.rentedCount > 100;
 
+  
   return (
-    <div className="flex flex-col gap-16 p-10 max-w-7xl mx-auto">
+    <div className="flex flex-col gap-20   p-10 max-w-7xl mx-auto">
 
       <div className="flex flex-col lg:flex-row gap-10 p-8 bg-gradient-to-t from-bg to-bg-lighter shadow-lg shadow-black/25 rounded-2xl">
 
         <div className="relative flex-shrink-0 w-full lg:w-1/3">
           {isPopular && (
-            <div className="absolute -top-3 -left-3 bg-gradient-to-r from-accent2/90 to-accent2-hover/90 filter saturate-80 text-bg px-3 py-1 rounded-tr-xl rounded-bl-xl text-xs font-bold shadow-md flex flex-row gap-x-1 items-center">
+            <div className="absolute -top-3 -left-3 bg-gradient-to-r from-accent2 to-accent2-hover filter saturate-80 text-bg px-3 py-1 rounded-tr-xl rounded-bl-xl text-xs font-bold shadow-md flex flex-row gap-x-1 items-center">
               <FullStarIcon /> Popular Choice
             </div>
           )}
@@ -78,7 +82,29 @@ const BookDetails = ({ book}: BookDetailsProps) => {
           </div>
         </div>
       </div>
+
+
+      <div className="flex flex-col gap-6 ">
+        <h2 className="text-4xl font-light text-white">More from <span className="font-bold text-gradient-header">{book.category.categoryName}</span> category</h2>
+
+        {isSimilarLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="bg-gradient-to-t from-bg to-bg-lighter p-4 rounded-xl animate-pulse h-72" />
+            ))}
+          </div>
+        ) : similarError ? (
+          <p className="text-red-400">{similarError}</p>
+        ) : similarBooks.length === 0 ? (
+          <p className="text-gray-300 text-3xl mt-8">No books found :(</p>
+        ) : (
+          <DisplayBookCards books= {similarBooks.filter((b) => b.bookID != book.bookID)}/>
+        )}
+      </div>
     </div>
+
+
+
   );
 };
 

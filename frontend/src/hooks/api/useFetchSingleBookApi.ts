@@ -48,7 +48,6 @@ const useFetchSingleBookApi = (id: string | undefined) => {
           controller.abort();
         };
       }, [id]);
-
       return {book,errorMsg,isLoading}
 }
 

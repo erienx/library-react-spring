@@ -24,7 +24,10 @@ public class BookController {
     private PublisherRepository publisherRepository;
 
     @GetMapping
-    public List<Book> getAllBooks() {
+    public List<Book> getAllBooks(@RequestParam(required = false) String search) {
+        if (search!=null && !search.isEmpty()){
+            return bookRepository.findBookByTitleContainingIgnoreCase(search);
+        }
         return bookRepository.findAll();
     }
 
@@ -47,7 +50,7 @@ public class BookController {
 
         Book book = Book.builder()
                 .title(bookRequest.title())
-                .publicationDate(LocalDate.ofEpochDay(bookRequest.publicationDate()))
+                .publicationYear(bookRequest.publicationYear())
                 .author(author)
                 .category(cat)
                 .rating(bookRequest.rating())
@@ -65,7 +68,7 @@ public class BookController {
         return bookRepository.findById(id).map(book -> {
             book.setTitle(bookDetails.getTitle());
             book.setPages(bookDetails.getPages());
-            book.setPublicationDate(bookDetails.getPublicationDate());
+            book.setPublicationYear(bookDetails.getPublicationYear());
             book.setAddedDate(bookDetails.getAddedDate());
             book.setPathToCover(bookDetails.getPathToCover());
             book.setRentedCount(bookDetails.getRentedCount());

@@ -19,7 +19,7 @@ public class Book {
     private Long bookID;
 
     private String title;
-    private LocalDate publicationDate;
+    private Integer publicationYear;
 
     @CreationTimestamp
     private LocalDate addedDate;

@@ -81,7 +81,7 @@ class LibraryApplicationTests {
     private Book createSampleBook(String title, Publisher publisher, Category category, Author author) {
         return bookRepository.save(Book.builder()
                 .title(title)
-                .publicationDate(LocalDate.of(2021, 1, 1))
+                .publicationYear(2021)
                 .pages(350)
                 .pathToCover("/covers/" + title.replaceAll(" ", "_") + ".jpg")
                 .publisher(publisher)

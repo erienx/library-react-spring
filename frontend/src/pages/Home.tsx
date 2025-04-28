@@ -4,13 +4,13 @@ import Spinner from '../components/ui/Spinner';
 import BookCard from '../components/BookCard';
 import HeroSection from '../components/HeroSection';
 import useDebounce from '../hooks/useDebounce';
-import useFetchBooks from '../hooks/useFetchBooks';
+import useFetchBooksApi from '../hooks/useFetchBooksApi';
 import FeaturesInfo from '../components/FeaturesInfo';
 
 const Home = () => {
       const [searchInp, setSearchInp] = useState('');
       const debouncedSearchInp = useDebounce(searchInp, 1000);
-      const {books,errorMsg,isLoading} = useFetchBooks(debouncedSearchInp);
+      const {books,errorMsg,isLoading} = useFetchBooksApi(debouncedSearchInp);
     const getContent = () => {
         if (isLoading || books==null) return <Spinner/>;
         if (errorMsg){

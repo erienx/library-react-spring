@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <div className="bg-pattern w-full min-h-screen bg-center bg-cover overflow-x-hidden">
-      <div className="px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10">
+      <div className="px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10 gap-3">
         <HeroSection />
         <Search searchInp={searchInp} setSearchInp={setSearchInp} placeholder='Search for a book' />
         <section className="space-y-9">
@@ -30,7 +30,7 @@ const Home = () => {
             searchInp={searchInp}
             itemType="books"
           >
-            <DisplayBookCards books={books} />
+            <DisplayBookCards books={books} loadChunk={8} />
           </HandleLoadingList>
 
 

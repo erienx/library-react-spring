@@ -10,14 +10,7 @@ type HandleLoadingListProps = {
   children: React.ReactNode;
 };
 
-export const HandleLoadingList = ({
-  isLoading,
-  errorMsg,
-  items,
-  searchInp,
-  itemType = 'items',
-  children,
-}: HandleLoadingListProps) => {
+export const HandleLoadingList = ({ isLoading, errorMsg, items, searchInp, itemType = 'items', children, }: HandleLoadingListProps) => {
   if (isLoading) {
     return (
       <>

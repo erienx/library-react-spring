@@ -8,13 +8,7 @@ type HandleLoadingSingleItemProps = {
     children: React.ReactNode;
 };
 
-export const HandleLoadingSingleItem = ({
-    isLoading,
-    errorMsg,
-    notFoundCondition,
-    notFoundMessage,
-    children,
-}: HandleLoadingSingleItemProps) => {
+export const HandleLoadingSingleItem = ({ isLoading, errorMsg, notFoundCondition, notFoundMessage, children, }: HandleLoadingSingleItemProps) => {
     if (isLoading) return <Spinner />;
 
     if (errorMsg)

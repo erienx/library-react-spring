@@ -5,15 +5,21 @@ import DisplayBookCards from '../components/DisplayBookCards';
 import { HandleLoadingList } from '../components/HandleLoadingList';
 
 import { useSearchParams } from 'react-router-dom';
-import useFetchBooksByAuthorNameApi from '../hooks/api/useFetchBooksByAuthorApi';
+import useFetchBooksByQueryApi from '../hooks/api/useFetchBooksByQueryApi';
 
-export const SearchAuthorPage = () => {
+type SearchBooksTemplateProps = {
+    queryType: 'author' | 'publisher';
+    placeholder: string;
+    emptySearchMessage: string;
+};
+
+export const SearchBooksTemplate = ({ queryType, placeholder, emptySearchMessage }: SearchBooksTemplateProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const searchTerm = searchParams.get('q') || '';
     const [searchInp, setSearchInp] = useState(searchTerm);
     const debouncedSearchInp = useDebounce(searchInp, 1000);
 
-    const { books, errorMsg, isLoading } = useFetchBooksByAuthorNameApi(debouncedSearchInp);
+    const { books, errorMsg, isLoading } = useFetchBooksByQueryApi(queryType, debouncedSearchInp);
 
     useEffect(() => {
         if (debouncedSearchInp !== searchTerm) {
@@ -26,7 +32,7 @@ export const SearchAuthorPage = () => {
             <Search
                 searchInp={searchInp}
                 setSearchInp={setSearchInp}
-                placeholder="Search for an author"
+                placeholder={placeholder}
             />
             <div className="px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10">
 
@@ -41,7 +47,7 @@ export const SearchAuthorPage = () => {
                         <DisplayBookCards books={books} />
 
                     </HandleLoadingList>
-                    : <p className='text-white text-3xl text-center'>Please provide an author</p>}
+                    : <p className='text-white text-3xl text-center'>{emptySearchMessage}</p>}
 
             </div>
         </div>

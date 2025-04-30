@@ -12,7 +12,7 @@ const LowerHeader = () => {
       text: 'AUTHORS'
     },
     {
-      path: '/contact',
+      path: '/publisher',
       text: 'PUBISHERS'
     },
   ]

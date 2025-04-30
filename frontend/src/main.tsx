@@ -15,7 +15,8 @@ import AdminPage from './pages/AdminPage.tsx'
 import { BookPage } from './pages/BookPage.tsx'
 import CartPage from './pages/CartPage.tsx'
 import Home from './pages/Home.tsx'
-import { SearchAuthorPage } from './pages/SearchAuthorPage.tsx'
+import SearchBooksAuthor from './pages/SearchBooksAuthor.tsx'
+import SearchBooksPublisher from './pages/SearchBooksPublisher.tsx'
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'author',
-        element: <SearchAuthorPage />
+        element: <SearchBooksAuthor />
+      },
+      {
+        path: 'publisher',
+        element: <SearchBooksPublisher />
       },
       {
         path: 'cart',

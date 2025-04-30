@@ -62,6 +62,10 @@ public class BookService {
         return bookRepository.findBooksByAuthorNameLike(name, pageable);
     }
 
+    public Page<Book> findBooksByPublisherName(String name, Pageable pageable){
+        return bookRepository.findBooksByPublisherNameLike(name, pageable);
+    }
+
     public Boolean deleteBook(Long id){
         return bookRepository.findById(id).map(book -> {
             bookRepository.delete(book);

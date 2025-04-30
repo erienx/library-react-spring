@@ -39,6 +39,11 @@ public class BookController {
     public ResponseEntity<Page<Book>> getBooksByAuthorNameLike(@PathVariable String name, Pageable pageable) {
         Page<Book> books = bookService.findBooksByAuthorName(name, pageable);
         return ResponseEntity.ok(books);
+    }   
+    @GetMapping("/publisher/{name}")
+    public ResponseEntity<Page<Book>> getBooksByPublisherNameLike(@PathVariable String name, Pageable pageable) {
+        Page<Book> books = bookService.findBooksByPublisherName(name, pageable);
+        return ResponseEntity.ok(books);
     }
 
     @PostMapping

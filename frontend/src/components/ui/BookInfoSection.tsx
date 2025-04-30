@@ -34,7 +34,7 @@ const BookInfoSection = ({ book }: BookInfoSectionProps) => {
 
                 <div className="flex flex-col">
                     <span className="font-semibold text-white">Publisher:</span>
-                    <Link to={`/publisher/${book.publisher.publisherID}`} className="text-accent2 hover:underline">
+                    <Link to={`/publisher?q=${book.publisher.publisherName}`} className="text-accent2 hover:underline">
                         {book.publisher.publisherName}
                     </Link>
                 </div>

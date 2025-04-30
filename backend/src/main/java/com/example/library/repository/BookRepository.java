@@ -14,6 +14,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Page<Book> findByCategoryCategoryID(Long id, Pageable pageable);
 
-    @Query("SELECT b FROM Book b WHERE LOWER(b.author.authorName) LIKE LOWER(CONCAT('%', :name, '%'))")
+    @Query("select book from Book book where lower(book.author.authorName) like lower(concat('%', :name, '%'))")
     Page<Book> findBooksByAuthorNameLike(@Param("name") String name, Pageable pageable);
+
+    @Query("select book from Book book where lower(book.publisher.publisherName) like lower(concat('%', :name, '%'))")
+    Page<Book> findBooksByPublisherNameLike(@Param("name") String name, Pageable pageable);
 }

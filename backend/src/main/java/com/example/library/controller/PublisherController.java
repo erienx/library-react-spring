@@ -1,7 +1,7 @@
 package com.example.library.controller;
 
 import com.example.library.model.Publisher;
-import com.example.library.repository.PublisherRepository;
+import com.example.library.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +12,15 @@ import java.util.List;
 public class PublisherController {
 
     @Autowired
-    private PublisherRepository publisherRepository;
+    private PublisherService publisherService;
 
     @PostMapping
     public Publisher createPublisher(@RequestBody Publisher publisher) {
-        return publisherRepository.save(publisher);
+        return publisherService.addPublisher(publisher);
     }
 
     @GetMapping
     public List<Publisher> getAllPublishers() {
-        return publisherRepository.findAll();
+        return publisherService.findAllPublishers();
     }
 }

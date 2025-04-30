@@ -24,21 +24,16 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
     @Autowired
-    private AuthorRepository authorRepository;
+    private AuthorService authorService;
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
     @Autowired
-    private PublisherRepository publisherRepository;
+    private PublisherService publisherService;
 
     public Book uploadBook(BookUploadRequest bookRequest){
-        Author author = authorRepository.findByAuthorName(bookRequest.author())
-                .orElseGet(() -> authorRepository.save(Author.builder().authorName(bookRequest.author()).build()));
-
-        Category cat = categoryRepository.findByCategoryName(bookRequest.category())
-                .orElseGet(() -> categoryRepository.save(Category.builder().categoryName(bookRequest.category()).build()));
-
-        Publisher publisher = publisherRepository.findByPublisherName(bookRequest.publisher())
-                .orElseGet(() -> publisherRepository.save(Publisher.builder().publisherName(bookRequest.publisher()).build()));
+        Author author = authorService.getOrAddAuthor(bookRequest.author());
+        Category cat = categoryService.getOrAddCategory(bookRequest.category());
+        Publisher publisher = publisherService.getOrAddPublisher(bookRequest.publisher());
 
         Book book = Book.builder()
                 .title(bookRequest.title())

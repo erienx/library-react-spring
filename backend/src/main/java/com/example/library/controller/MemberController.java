@@ -11,15 +11,5 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/members")
 public class MemberController {
-    @Autowired private MemberRepository memberRepository;
 
-    @GetMapping
-    public List<Member> getAllMembers() {
-        return memberRepository.findAll();
-    }
-
-    @PostMapping
-    public Member createMember(@RequestBody Member member) {
-        return memberRepository.save(member);
-    }
 }

@@ -8,12 +8,12 @@ const LowerHeader = () => {
       text: 'HOME'
     },
     {
-      path: '/about',
-      text: 'ABOUT'
+      path: '/author',
+      text: 'AUTHORS'
     },
     {
       path: '/contact',
-      text: 'CONTACT'
+      text: 'PUBISHERS'
     },
   ]
   return (

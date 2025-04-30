@@ -30,8 +30,15 @@ public class BookController {
     }
 
     @GetMapping("/category/{id}")
-    public Page<Book> getBooksByCategoryId(@PathVariable Long id, Pageable pageable) {
-        return bookService.findBooksByCategoryId(id, pageable);
+    public ResponseEntity<Page<Book>> getBooksByCategoryId(@PathVariable Long id, Pageable pageable) {
+        Page<Book> books =  bookService.findBooksByCategoryId(id, pageable);
+        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/author/{name}")
+    public ResponseEntity<Page<Book>> getBooksByAuthorNameLike(@PathVariable String name, Pageable pageable) {
+        Page<Book> books = bookService.findBooksByAuthorName(name, pageable);
+        return ResponseEntity.ok(books);
     }
 
     @PostMapping

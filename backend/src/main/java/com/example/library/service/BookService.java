@@ -5,17 +5,12 @@ import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.model.Category;
 import com.example.library.model.Publisher;
-import com.example.library.repository.AuthorRepository;
 import com.example.library.repository.BookRepository;
-import com.example.library.repository.CategoryRepository;
-import com.example.library.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +56,10 @@ public class BookService {
     }
     public Page<Book> findBooksByCategoryId(Long id, Pageable pageable){
         return bookRepository.findByCategoryCategoryID(id, pageable);
+    }
+
+    public Page<Book> findBooksByAuthorName(String name, Pageable pageable){
+        return bookRepository.findBooksByAuthorNameLike(name, pageable);
     }
 
     public Boolean deleteBook(Long id){

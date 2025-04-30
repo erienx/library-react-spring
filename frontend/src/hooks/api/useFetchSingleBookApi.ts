@@ -16,6 +16,7 @@ const useFetchSingleBookApi = (id: string | undefined) => {
           setIsLoading(true);
           try {
             const url = `http://localhost:8080/books/${id}`;
+            // await new Promise(res => setTimeout(res, 2000));
 
       
             const res = await fetch(url, { signal: controller.signal });
@@ -35,7 +36,7 @@ const useFetchSingleBookApi = (id: string | undefined) => {
           }
           catch (error: any) {
             if (error.name !== "AbortError") {
-              setErrorMsg("Error fetching books.");
+              setErrorMsg("Couldn't find a book");
               setBook(null); 
             }
           } finally {

@@ -8,7 +8,7 @@ type BookCardProps = {
 
 const BookCard = ({ book }: BookCardProps) => {
   return (
-    <Link to={`/book/${book.title}/${book.bookID}`} className="bg-gradient-to-t from-bg to-bg-lighter p-5 rounded-2xl shadow-lg shadow-black/25 flex flex-col
+    <Link to={`/book/${book.bookID}`} className="bg-gradient-to-t from-bg to-bg-lighter p-5 rounded-2xl shadow-lg shadow-black/25 flex flex-col
         hover:scale-102 transition-all duration-400 hover:shadow-black/40 hover:from-bg hover:to-bg-lighter2">
       <img
         className="rounded-lg h-auto w-auto max-h-[300px] min-h-[300px] overflow-hidden"

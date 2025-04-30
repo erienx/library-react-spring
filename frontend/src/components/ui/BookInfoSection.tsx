@@ -11,7 +11,7 @@ const BookInfoSection = ({ book }: BookInfoSectionProps) => {
         <section className="flex flex-col flex-grow gap-6">
             <div>
                 <h1 className="text-4xl font-bold text-white mb-2">{book.title}</h1>
-                <Link to={`/author/${book.author.authorID}`} className="text-xl text-accent2 hover:underline">
+                <Link to={`/author/${book.author.authorName}`} className="text-xl text-accent2 hover:underline">
                     by {book.author.authorName}
                 </Link>
             </div>

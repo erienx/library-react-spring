@@ -15,6 +15,7 @@ import AdminPage from './pages/AdminPage.tsx'
 import { BookPage } from './pages/BookPage.tsx'
 import CartPage from './pages/CartPage.tsx'
 import Home from './pages/Home.tsx'
+import { SearchAuthorPage } from './pages/SearchAuthorPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -40,8 +41,12 @@ const router = createBrowserRouter([
         </ProtectedRoute>)
       },
       {
-        path: 'book/:title/:id',
+        path: 'book/:id',
         element: <BookPage />,
+      },
+      {
+        path: 'author/:searchTerm?',
+        element: <SearchAuthorPage />
       },
       {
         path: 'cart',

@@ -6,12 +6,12 @@ type DisplayBookCardsProps = {
 }
 
 const DisplayBookCards = ({ books }: DisplayBookCardsProps) => {
-  return (
+  return books.length > 0 ? (
     <ul className='grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-      {books.map((book: Book) => {
-        return <BookCard key={book.bookID} book={book} />
-      })}
-    </ul>)
-}
-
+      {books.map((book: Book) => (
+        <BookCard key={book.bookID} book={book} />
+      ))}
+    </ul>
+  ) : null;
+};
 export default DisplayBookCards

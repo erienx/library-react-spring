@@ -11,12 +11,13 @@ import LoginPage from './pages/LoginPage.tsx'
 import RegisterPage from './pages/RegisterPage.tsx'
 import AuthProvider from './components/providers/AuthProvider.tsx'
 import ProtectedRoute from './components/providers/ProtectedRoute.tsx'
-import AdminPage from './pages/AdminPage.tsx'
 import { BookPage } from './pages/BookPage.tsx'
 import CartPage from './pages/CartPage.tsx'
 import Home from './pages/Home.tsx'
 import SearchBooksAuthor from './pages/SearchBooksAuthor.tsx'
 import SearchBooksPublisher from './pages/SearchBooksPublisher.tsx'
+import ManageRentalsPage from './pages/admin/ManageRentalsPage.tsx'
+import AddBookPage from './pages/admin/AddBookPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -36,12 +37,6 @@ const router = createBrowserRouter([
         element: <ContactPage />
       },
       {
-        path: 'admin',
-        element: (<ProtectedRoute allowedRoles={['admin']}>
-          <AdminPage />
-        </ProtectedRoute>)
-      },
-      {
         path: 'book/:id',
         element: <BookPage />,
       },
@@ -56,8 +51,19 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: <CartPage />
-      }
-
+      },
+      {
+        path: 'admin/manage-rentals',
+        element: (<ProtectedRoute allowedRoles={['admin']}>
+          <ManageRentalsPage />
+        </ProtectedRoute>)
+      },
+      {
+        path: 'admin/add-book',
+        element: (<ProtectedRoute allowedRoles={['admin']}>
+          <AddBookPage />
+        </ProtectedRoute>)
+      },
     ]
   },
   {

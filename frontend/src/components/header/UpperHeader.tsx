@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import CartIcon from "../../assets/cart-icon.svg?react"
 import { useAuth } from "../providers/AuthProvider";
 import { useHasAccess } from "../../hooks/useHasAccess";
 import AdminSelect from "../ui/AdminSelect";
+import UpperHeaderLink from "../ui/UpperHeaderLink";
 
 const UpperHeader = () => {
     const { currentUser, handleLogout } = useAuth();
@@ -12,35 +13,41 @@ const UpperHeader = () => {
     const logoutAndRedirect = async () => {
         await handleLogout();
         navigate('/');
-    }
+    };
 
     return (
-        <>
-            <header className="flex flex-col sm:flex-row justify-end items-center px-4 sm:px-14 py-3 flex-wrap gap-y-12 sm:gap-y-8 ">
-                <div className="flex flex-wrap items-center justify-between gap-4 sm:gap-8 lg:gap-12">
+        <header className="w-full bg-bg px-4 sm:px-10 py-4 border-b border-bg-lighter shadow-sm">
+            <div className="mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
+
+                <div className="text-white text-sm sm:text-2xl min-h-[28px]">
                     {currentUser && (
+                        <>Welcome, <span className="font-semibold">{currentUser.firstName} {currentUser.lastName}</span></>
+                    )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 justify-center sm:justify-end">
+                    {isAdmin && <AdminSelect />}
+
+                    {!currentUser && (
                         <>
-                            <span className="regular-text">Welcome, <span className="font-semibold">{currentUser.firstName + " " + currentUser.lastName}</span></span>
-                            <button onClick={logoutAndRedirect} className="regular-text cursor-pointer">Sign Out</button>
+                            <UpperHeaderLink to="register" text="Register" />
+                            <UpperHeaderLink to="login" text="Log in" />
                         </>
                     )}
 
-                    {isAdmin && <AdminSelect />}
+                    {currentUser && <UpperHeaderLink to="cart" text="Items" Icon={CartIcon} />}
 
-                    {(!currentUser && <>
-                        <Link to='register' className="regular-text">Register</Link>
-                        <Link to='login' className="regular-text">Sign in</Link>
-                    </>
-                    )}
-                    <Link to='cart' className="flex items-center gap-2">
-                        <CartIcon color="white" />
-                        <span className="regular-text">Items</span>
-                    </Link>
+                    <button
+                        onClick={logoutAndRedirect}
+                        className="px-4 py-2 bg-bg-lighter text-white text-sm font-medium rounded-md shadow-md hover:bg-bg hover:text-accent1 transition cursor-pointer">
+                        Sign Out
+                    </button>
                 </div>
+            </div>
+        </header >
 
-            </header >
-        </>
-    )
-}
+    );
+};
+
 
 export default UpperHeader

@@ -70,8 +70,9 @@ const AutocompleteInput = ({ Icon, placeholder, register, value, setValue, error
                     }}
                     onBlur={() => {
                         state.onBlur();
-                        setTimeout(() => setActiveField(null), 100);
+                        setActiveField(null);
                     }}
+
                     className={clsx(
                         "pl-10 pr-4 py-2 border rounded-md w-full outline-none transition-colors duration-150 bg-bg text-white shadow-sm",
                         {

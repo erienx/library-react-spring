@@ -37,11 +37,11 @@ const UpperHeader = () => {
 
                     {currentUser && <UpperHeaderLink to="cart" text="Items" Icon={CartIcon} />}
 
-                    <button
+                    {currentUser && <button
                         onClick={logoutAndRedirect}
                         className="px-4 py-2 bg-bg-lighter text-white text-sm font-medium rounded-md shadow-md hover:bg-bg hover:text-accent1 transition cursor-pointer">
                         Sign Out
-                    </button>
+                    </button>}
                 </div>
             </div>
         </header >

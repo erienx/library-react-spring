@@ -12,7 +12,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (currentUser) navigate('/');
-    }, [currentUser]);
+    }, [currentUser, navigate]);
 
     return (
         <>

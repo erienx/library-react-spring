@@ -13,12 +13,14 @@ import CalendarIcon from "../assets/form/calendar.svg?react";
 import PublisherIcon from "../assets/form/publisher.svg?react";
 import CategoryIcon from "../assets/form/category.svg?react";
 import CopyIcon from "../assets/form/copy.svg?react";
+import ImageIcon from "../assets/form/image.svg?react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AutocompleteInput from "./AutocompleteInput";
 import { AutocompleteProvider } from "./providers/AutocompleteProvider";
 import useFetchItems from "../hooks/api/useFetchItems";
 import uploadCoverFile from "../hooks/api/uploadCoverFile";
+import clsx from "clsx";
 
 
 const schema = z.object({
@@ -162,19 +164,31 @@ const AddBookForm = () => {
             />
 
             <div className="relative group">
-                <label className="block text-sm font-medium text-white mb-1">Book Cover</label>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) setCoverFile(file);
-                    }}
-                    className="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4
-            file:rounded-md file:border-0 file:text-sm file:font-semibold
-            file:bg-accent1 file:text-white hover:file:bg-accent1-hover"
-                />
+                <div className="relative flex items-center">
+                    <ImageIcon
+                        className={clsx(
+                            "absolute left-3 w-5 h-5 transition-colors z-10 pointer-events-none",
+                            coverFile ? "text-accent1" : "text-slate-300 group-hover:text-white"
+                        )}
+                    />
+
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) setCoverFile(file);
+                        }}
+                        className={clsx(
+                            "pl-10 pr-4 py-2 w-full rounded-md bg-bg text-white text-sm file:hidden border transition-colors cursor-pointer",
+                            coverFile ? "border-accent1" : "border-slate-300 "
+                        )}
+                    />
+
+                    <span className="absolute right-3 text-xs text-slate-400 pointer-events-none">.jpg, .png</span>
+                </div>
             </div>
+
 
             <ButtonSubmit isSubmitting={isSubmitting} btnText="Add Book" />
             <FormError error={errors.root} />

@@ -4,7 +4,7 @@ import DummyLoadingCards from "./ui/DummyLoadingCards";
 type HandleLoadingListProps = {
   isLoading: boolean;
   errorMsg?: string;
-  items: unknown[]; // generic
+  items: never[];
   searchInp?: string;
   itemType?: string;
   children: React.ReactNode;

@@ -18,6 +18,7 @@ import { useState } from "react";
 import AutocompleteInput from "./AutocompleteInput";
 import { AutocompleteProvider } from "./providers/AutocompleteProvider";
 import useFetchItems from "../hooks/api/useFetchItems";
+import uploadCoverFile from "../hooks/api/uploadCoverFile";
 
 
 const schema = z.object({
@@ -28,6 +29,7 @@ const schema = z.object({
     publisher: z.string().min(1, "Publisher is required"),
     category: z.string().min(1, "Category is required"),
     copyCount: z.string().regex(/^\d+$/, "Copy count must be a number"),
+    cover: z.any().optional(),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -37,6 +39,7 @@ const AddBookForm = () => {
     const [categoryValue, setCategoryValue] = useState("");
     const [publisherValue, setPublisherValue] = useState("");
     const [authorValue, setAuthorValue] = useState("");
+    const [coverFile, setCoverFile] = useState<File | null>(null);
 
     const {
         register,
@@ -62,7 +65,7 @@ const AddBookForm = () => {
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
-            const transformed = {
+            let transformed = {
                 ...data,
                 publicationYear: parseInt(data.publicationYear),
                 pages: parseInt(data.pages),
@@ -70,14 +73,25 @@ const AddBookForm = () => {
                 category: categoryValue,
             };
 
+            if (coverFile) {
+                const coverPath = await uploadCoverFile(coverFile);
+                transformed = {
+                    ...transformed,
+                    cover: coverPath,
+                }
+            }
+
+
             await mockUpload(transformed);
 
             reset();
+            setCoverFile(null);
             navigate('/');
         } catch {
             setError("root", { message: "Failed to add book." });
         }
     };
+
 
     return (
         <form
@@ -146,6 +160,21 @@ const AddBookForm = () => {
                 value={watch("copyCount")}
                 error={errors.copyCount}
             />
+
+            <div className="relative group">
+                <label className="block text-sm font-medium text-white mb-1">Book Cover</label>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) setCoverFile(file);
+                    }}
+                    className="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4
+            file:rounded-md file:border-0 file:text-sm file:font-semibold
+            file:bg-accent1 file:text-white hover:file:bg-accent1-hover"
+                />
+            </div>
 
             <ButtonSubmit isSubmitting={isSubmitting} btnText="Add Book" />
             <FormError error={errors.root} />

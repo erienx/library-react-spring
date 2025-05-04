@@ -157,7 +157,7 @@ const AddBookForm = () => {
 
 export default AddBookForm;
 
-async function mockUpload(data: any) {
+async function mockUpload(data: unknown) {
     return new Promise((resolve) => {
         console.log("Uploading book: ", data);
         setTimeout(resolve, 1000);

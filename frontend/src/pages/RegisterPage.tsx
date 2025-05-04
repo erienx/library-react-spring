@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import AuthHeader from "../components/ui/AuthHeader"
 import RegisterForm from "../components/RegisterForm"
-import { useAuth } from "../components/providers/AuthProvider";
+import { useAuth } from "../components/providers/AuthContext";
 import { useEffect } from "react";
 
 const RegisterPage = () => {
@@ -10,7 +10,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (currentUser) navigate('/');
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   return (
     <>

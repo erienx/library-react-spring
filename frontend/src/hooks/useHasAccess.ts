@@ -1,4 +1,4 @@
-import { useAuth } from "../components/providers/AuthProvider";
+import { useAuth } from "../components/providers/AuthContext";
 import { User } from "../types/types";
 
 

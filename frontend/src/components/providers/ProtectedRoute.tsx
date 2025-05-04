@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { User } from "../../types/types";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "./AuthContext";
 
 type ProtectedRouteProps = PropsWithChildren & {
     allowedRoles?: User['role'][];

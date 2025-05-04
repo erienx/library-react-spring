@@ -22,7 +22,7 @@ const useFetchBooksApi = (value: string) => {
               throw new Error("Books fetch failed.");
             }
       
-            let data = await res.json();
+            const data = await res.json();
       
             if (!data) {
               setErrorMsg("No books found.");

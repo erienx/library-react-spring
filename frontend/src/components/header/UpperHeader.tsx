@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import CartIcon from "../../assets/cart-icon.svg?react"
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../providers/AuthContext";
 import { useHasAccess } from "../../hooks/useHasAccess";
 import AdminSelect from "../ui/AdminSelect";
 import UpperHeaderLink from "../ui/UpperHeaderLink";

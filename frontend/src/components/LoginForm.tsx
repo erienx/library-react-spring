@@ -7,7 +7,7 @@ import FormError from "../components/ui/FormError";
 import ButtonSubmit from "../components/ui/ButtonSubmit";
 import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./providers/AuthProvider";
+import { useAuth } from "./providers/AuthContext";
 
 const schema = z.object({
     email: z.string().email("Please enter a valid email address"),

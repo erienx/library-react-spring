@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AutocompleteInput from "./AutocompleteInput";
 import { AutocompleteProvider } from "./providers/AutocompleteProvider";
+import useFetchItems from "../hooks/api/useFetchItems";
 
 
 const schema = z.object({
@@ -56,7 +57,7 @@ const AddBookForm = () => {
         },
         resolver: zodResolver(schema),
     });
-    const categories = ["Fantasy", "Sci-Fi", "History", "Biography"];
+    const { items: categories } = useFetchItems({ endpointType: "categories" });
     const authors = ["Andrzej Sapkowski", "J. K. Rowling", "Robert Greene"];
     const publishers = ["Supernova", "Fonopolis", "Penguin Books"];
 

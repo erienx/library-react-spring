@@ -11,7 +11,7 @@ const fetchBooks = async (value: string = "") => {
       throw new Error("Books fetch failed.");
     }
 
-    let data = await res.json();
+    const data = await res.json();
     const books = value ? data.docs : data.works;
     return books;
   } catch (error) {
@@ -66,6 +66,7 @@ const uploadAllBooks = async () => {
       category: getRandomItem(categoryList),   
     };
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await useUploadBook(bookData);
   }
 };

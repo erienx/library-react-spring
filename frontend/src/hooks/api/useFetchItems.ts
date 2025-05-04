@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-type useFetchCategoriesType = {
+type useFetchItemsType = {
     endpointType: string;
 }
 
-const useFetchCategories = ({ endpointType }: useFetchCategoriesType) => {
+const useFetchItems = ({ endpointType }: useFetchItemsType) => {
     const [items, setItems] = useState<string[]>([]);
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -26,16 +26,20 @@ const useFetchCategories = ({ endpointType }: useFetchCategoriesType) => {
                     setItems([]);
                     return;
                 }
-                setItems(data);
+                const names = data.map((item: { categoryName: string }) => item.categoryName);
+
+                setItems(names);
+                setErrorMsg('');
             }
             catch {
                 setErrorMsg("Error fetching books.");
                 setItems([]);
             }
+
         }
         fetchData();
     }, [endpointType]);
 
     return { items, errorMsg };
 }
-export default useFetchCategories;
+export default useFetchItems;

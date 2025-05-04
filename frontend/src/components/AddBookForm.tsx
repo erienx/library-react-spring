@@ -48,18 +48,15 @@ const AddBookForm = () => {
     } = useForm<FormFields>({
         defaultValues: {
             title: "Blood of Elves",
-            author: "Andrzej Sapkowski",
-            // category: "Fantasy",
             pages: "632",
             copyCount: "3",
             publicationYear: "1994",
-            publisher: "Supernova",
         },
         resolver: zodResolver(schema),
     });
     const { items: categories } = useFetchItems({ endpointType: "categories" });
-    const authors = ["Andrzej Sapkowski", "J. K. Rowling", "Robert Greene"];
-    const publishers = ["Supernova", "Fonopolis", "Penguin Books"];
+    const { items: authors } = useFetchItems({ endpointType: "authors" });
+    const { items: publishers } = useFetchItems({ endpointType: "publishers" });
 
 
 

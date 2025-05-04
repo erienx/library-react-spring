@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 type useFetchItemsType = {
-    endpointType: string;
+    endpointType: "categories" | "authors" | "publishers";
 }
 
 const useFetchItems = ({ endpointType }: useFetchItemsType) => {
@@ -26,7 +26,16 @@ const useFetchItems = ({ endpointType }: useFetchItemsType) => {
                     setItems([]);
                     return;
                 }
-                const names = data.map((item: { categoryName: string }) => item.categoryName);
+
+                const keyMap = {
+                    categories: "categoryName",
+                    authors: "authorName",
+                    publishers: "publisherName",
+                } as const;
+
+                const key = keyMap[endpointType];
+
+                const names = data.map((item: Record<string, string>) => item[key]);
 
                 setItems(names);
                 setErrorMsg('');

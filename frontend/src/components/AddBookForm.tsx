@@ -74,6 +74,8 @@ const AddBookForm = () => {
                 pages: parseInt(data.pages),
                 copyCount: parseInt(data.copyCount),
                 category: categoryValue,
+                author: authorValue,
+                publisher: publisherValue,
                 rentedCount: 0,
                 rating: 4.0,
             };
@@ -97,6 +99,9 @@ const AddBookForm = () => {
             await uploadBook(transformed);
 
             setCoverFile(null);
+            setAuthorValue("");
+            setCategoryValue("");
+            setPublisherValue("");
             reset();
             navigate('/');
         } catch {

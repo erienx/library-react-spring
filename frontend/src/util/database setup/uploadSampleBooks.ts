@@ -1,4 +1,4 @@
-import { useUploadBook } from "../useUploadBook";
+import uploadBook from "../../hooks/api/uploadBook";
 
 const fetchBooks = async (value: string = "") => {
   const url = value
@@ -49,25 +49,24 @@ const uploadAllBooks = async () => {
     "Thriller"
   ];
 
-  const books = await fetchBooks(""); 
+  const books = await fetchBooks("");
 
   for (const book of books) {
     const bookData = {
       title: book.title,
       publicationYear: book.first_publish_year || 0,
       author: book.author_name ? book.author_name[0] : "Unknown",
-      pathToCover: book.cover_edition_key 
+      pathToCover: book.cover_edition_key
         ? `https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-L.jpg`
         : "",
-      pages: Math.floor(Math.random()*800+300),
-      rentedCount: Math.floor(Math.random()*200),
-      rating: parseFloat(randomFloat(3.5, 5)), 
-      publisher: getRandomItem(publisherList), 
-      category: getRandomItem(categoryList),   
+      pages: Math.floor(Math.random() * 800 + 300),
+      rentedCount: Math.floor(Math.random() * 200),
+      rating: parseFloat(randomFloat(3.5, 5)),
+      publisher: getRandomItem(publisherList),
+      category: getRandomItem(categoryList),
     };
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    await useUploadBook(bookData);
+    await uploadBook(bookData);
   }
 };
 

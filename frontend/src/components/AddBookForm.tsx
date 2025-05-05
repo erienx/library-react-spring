@@ -21,6 +21,7 @@ import { AutocompleteProvider } from "./providers/AutocompleteProvider";
 import useFetchItems from "../hooks/api/useFetchItems";
 import uploadCoverFile from "../hooks/api/uploadCoverFile";
 import clsx from "clsx";
+import uploadBook from "../hooks/api/uploadBook";
 
 
 const schema = z.object({
@@ -31,7 +32,7 @@ const schema = z.object({
     publisher: z.string().min(1, "Publisher is required"),
     category: z.string().min(1, "Category is required"),
     copyCount: z.string().regex(/^\d+$/, "Copy count must be a number"),
-    cover: z.any().optional(),
+    pathToCover: z.any().optional(),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -73,21 +74,30 @@ const AddBookForm = () => {
                 pages: parseInt(data.pages),
                 copyCount: parseInt(data.copyCount),
                 category: categoryValue,
+                rentedCount: 0,
+                rating: 0,
             };
 
             if (coverFile) {
                 const coverPath = await uploadCoverFile(coverFile);
                 transformed = {
                     ...transformed,
-                    cover: coverPath,
+                    pathToCover: coverPath,
+                }
+            }
+            else {
+                transformed = {
+                    ...transformed,
+                    pathToCover: "",
                 }
             }
 
 
-            await mockUpload(transformed);
 
-            reset();
+            await uploadBook(transformed);
+
             setCoverFile(null);
+            reset();
             navigate('/');
         } catch {
             setError("root", { message: "Failed to add book." });
@@ -197,10 +207,3 @@ const AddBookForm = () => {
 };
 
 export default AddBookForm;
-
-async function mockUpload(data: unknown) {
-    return new Promise((resolve) => {
-        console.log("Uploading book: ", data);
-        setTimeout(resolve, 1000);
-    });
-}

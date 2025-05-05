@@ -46,7 +46,7 @@ const useFetchBooksByQueryApi = (queryType: 'publisher' | 'author',authorName: s
     return () => {
       controller.abort();
     };
-  }, [authorName]);
+  }, [authorName, queryType]);
   return { books, errorMsg, isLoading };
 };
 

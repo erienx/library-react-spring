@@ -75,7 +75,7 @@ const AddBookForm = () => {
                 copyCount: parseInt(data.copyCount),
                 category: categoryValue,
                 rentedCount: 0,
-                rating: 0,
+                rating: 4.0,
             };
 
             if (coverFile) {

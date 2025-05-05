@@ -29,7 +29,7 @@ const DisplayBookCards = ({ books, loadChunk }: DisplayBookCardsProps) => {
           <BookCard key={book.bookID} book={book} />
         ))}
       </ul>
-      <p className='text-slate-200 text-md text-center'>Displayed {displayedBooks ?? books.length} books</p>
+      <p className='text-slate-200 text-md text-center'>Displayed {displayedBooks ?? books.length} {books.length == 1 ? "book" : "books"}</p>
       {displayedBooks && <ButtonRegular text="LOAD MORE" onClick={handleButtonClick} />}
     </div>
   );

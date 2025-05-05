@@ -6,6 +6,7 @@ import { HandleLoadingList } from '../components/HandleLoadingList';
 
 import { useSearchParams } from 'react-router-dom';
 import useFetchBooksByQueryApi from '../hooks/api/useFetchBooksByQueryApi';
+import PaginationButtons from '../components/ui/PaginationButtons';
 
 type SearchBooksTemplateProps = {
     queryType: 'author' | 'publisher';
@@ -18,8 +19,9 @@ export const SearchBooksTemplate = ({ queryType, placeholder, emptySearchMessage
     const searchTerm = searchParams.get('q') || '';
     const [searchInp, setSearchInp] = useState(searchTerm);
     const debouncedSearchInp = useDebounce(searchInp, 1000);
+    const [currentPage, setCurrentPage] = useState(0);
 
-    const { books, errorMsg, isLoading } = useFetchBooksByQueryApi(queryType, debouncedSearchInp);
+    const { books, errorMsg, isLoading, totalPages } = useFetchBooksByQueryApi(queryType, debouncedSearchInp, currentPage, 12);
 
     useEffect(() => {
         if (debouncedSearchInp !== searchTerm) {
@@ -27,8 +29,13 @@ export const SearchBooksTemplate = ({ queryType, placeholder, emptySearchMessage
         }
     }, [debouncedSearchInp, searchTerm, setSearchParams]);
 
+    useEffect(() => {
+        setCurrentPage(0);
+    }, [debouncedSearchInp]);
+
+
     return (
-        <div className='mx-5'>
+        <div className='flex flex-col items-center justify-center'>
             <Search
                 searchInp={searchInp}
                 setSearchInp={setSearchInp}
@@ -50,6 +57,7 @@ export const SearchBooksTemplate = ({ queryType, placeholder, emptySearchMessage
                     : <p className='text-white text-3xl text-center'>{emptySearchMessage}</p>}
 
             </div>
+            {totalPages > 0 && <PaginationButtons currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} className='mb-6' />}
         </div>
     );
 };

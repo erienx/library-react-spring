@@ -1,10 +1,11 @@
 import Spinner from "./ui/Spinner";
 import DummyLoadingCards from "./ui/DummyLoadingCards";
+import { Book } from "../types/types";
 
 type HandleLoadingListProps = {
   isLoading: boolean;
   errorMsg?: string;
-  items: never[];
+  items: Book[];
   searchInp?: string;
   itemType?: string;
   children: React.ReactNode;

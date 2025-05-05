@@ -1,0 +1,4 @@
+register
+login
+add to cart
+manage orders

@@ -5,6 +5,7 @@ import com.example.library.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,10 +15,12 @@ public class MemberController {
     private MemberService memberService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerMember(@RequestBody MemberDto memberDto){
+    public ResponseEntity<String> registerMember(@Validated @RequestBody MemberDto memberDto){
         try{
             memberService.register(memberDto);
             return ResponseEntity.ok("registered");
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("register failed");

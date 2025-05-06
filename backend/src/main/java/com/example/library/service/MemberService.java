@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class MemberService {
     @Autowired
@@ -20,6 +21,13 @@ public class MemberService {
 
 
     public void register(MemberDto memberDto) {
+        if (!memberDto.password().equals(memberDto.confirmPassword())) {
+            throw new IllegalArgumentException("Passwords do not match");
+        }
+
+        if (memberRepository.existsByEmail((memberDto.email()))) {
+            throw new IllegalArgumentException("Email is already registered");
+        }
         Member member = Member.builder().
                 firstName(memberDto.firstName())
                 .lastName(memberDto.lastName())

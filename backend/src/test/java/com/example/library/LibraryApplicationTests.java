@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootTest
 class LibraryApplicationTests {
@@ -101,9 +99,7 @@ class LibraryApplicationTests {
                 .firstName("Alice")
                 .lastName("Smith")
                 .email("alice@example.com")
-                .phoneNumber("123456789")
-                .address("123 Main St")
-                .pwd("password")
+                .password("password")
                 .isAdmin(false)
                 .build());
     }

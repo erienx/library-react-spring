@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.dto.LoginDto;
 import com.example.library.dto.MemberDto;
 import com.example.library.model.Member;
 import com.example.library.repository.MemberRepository;
@@ -37,5 +38,11 @@ public class MemberService {
                 .build();
 
         memberRepository.save(member);
+    }
+    public void authenticate(LoginDto loginDto){
+        Member member = memberRepository.getMemberByEmail(loginDto.email()).orElseThrow(() ->  new IllegalArgumentException("Email or password is invalid"));
+        if (!passwordEncoder.matches(loginDto.password(), member.getPassword())) {
+            throw new IllegalArgumentException("Email or password is invalid");
+        }
     }
 }

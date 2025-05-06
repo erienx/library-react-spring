@@ -4,9 +4,9 @@ import { User } from "../../types/types";
 type AuthContext = {
     authToken?: string | null;
     currentUser?: User | null;
-    handleLogin: () => Promise<void>;
+    handleLogin: (email: string, password: string) => Promise<void>;
     handleLogout: () => Promise<void>;
-}
+  };
 
 export const AuthContext = createContext<AuthContext | undefined>(undefined);
 

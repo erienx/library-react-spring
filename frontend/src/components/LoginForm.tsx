@@ -31,18 +31,13 @@ export const LoginForm = () => {
     const { handleLogin } = useAuth();
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
-            // request to backend here
-            await handleLogin();
-            console.log(data);
-
-
-            reset(); //if successful
-            navigate("/");
+          await handleLogin(data.email, data.password);
+          reset();
+          navigate("/");
+        } catch {
+          setError("root", { message: "Invalid email or password" });
         }
-        catch {
-            setError("root", { message: "Given email is already taken", });
-        }
-    }
+      };
 
     return (
         <form className="flex flex-col gap-y-3 rounded-2xl min-w-[200px] xs:min-w-[400px] text-blue" onSubmit={handleSubmit(onSubmit)}>

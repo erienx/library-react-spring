@@ -1,56 +1,57 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { User } from "../../types/types";
-import { getUser, login, logout } from "../../util/auth";
+import { login, logout, refreshToken } from "../../util/auth";
 import { AuthContext } from "./AuthContext";
+import getMe from "../../hooks/api/getMe";
 
 
 
 type AuthProviderProps = PropsWithChildren;
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-    const [authToken, setAuthToken] = useState<string | null>();
-    const [currentUser, setCurrentUser] = useState<User | null>();
+    const [authToken, setAuthToken] = useState<string | null>(null);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
 
     useEffect(() => {
-        async function fetchUser() {
+        async function tryRefresh() {
             try {
-                const response = await getUser();
-
-                const { authToken, user } = response.data;
-
-                setAuthToken(authToken);
+                const accessToken = await refreshToken();
+                setAuthToken(accessToken);
+                const user = await getMe(accessToken);
                 setCurrentUser(user);
-            } catch {
+                console.log("REFRESH SUCCESS", user);
+            } catch (err) {
                 setAuthToken(null);
                 setCurrentUser(null);
             }
         }
 
-        fetchUser();
-    }, [])
+        tryRefresh();
+    }, []);
 
-    async function handleLogin() {
+    async function handleLogin(email: string, password: string) {
         try {
-            const response = await login();
-
-            const { authToken, user } = response.data;
-
-            setAuthToken(authToken);
+            const accessToken = await login(email, password);
+            setAuthToken(accessToken);
+            const user = await getMe(accessToken);
             setCurrentUser(user);
         } catch {
             setAuthToken(null);
             setCurrentUser(null);
+            throw new Error("Login failed");
         }
     }
+
     async function handleLogout() {
         await logout();
-
         setAuthToken(null);
         setCurrentUser(null);
     }
 
-    return <AuthContext.Provider value={{ authToken, currentUser, handleLogin, handleLogout }}>
-        {children}
-    </AuthContext.Provider>
+    return (
+        <AuthContext.Provider value={{ authToken, currentUser, handleLogin, handleLogout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 

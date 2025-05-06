@@ -1,57 +1,59 @@
-//this is a mock backend 
-import { User } from "../types/types"
 
-const testUser: User = {
-  id: 1,
-  email: 'test@em.com',
-  firstName: 'Fname',
-  lastName: 'Lname',
-  role: 'admin',
-};
+export async function login(email: string, password: string) {
+  const response = await fetch("http://localhost:8080/members/login",{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include",
+    body: JSON.stringify({email,password}),
+});
+if (!response.ok){
+  throw new Error("login failed");
+}
+
+const data = await response.json();
 
 
-// mockSession token simulates http only cookie from backend
-export async function getUser() {
-  await new Promise((resole) => setTimeout(resole, 200));
 
-  const savedToken = localStorage.getItem("mockSessionToken");
+  return data.accessToken;
+}
 
-  if (!savedToken) {
-    throw new Error("Not authenticated");
+export async function refreshToken() {
+  const response = await fetch("http://localhost:8080/members/refresh", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      return Promise.reject(new Error("no refresh token")); //if logged out
+    }
+
+    const errorText = await response.text();
+    console.error("refresh error", response.status, errorText);
+    return Promise.reject(new Error("Failed to refresh token"));
   }
 
-  const authToken = generateAuthToken();
-
-  return {
-    status: 200,
-    data: {
-      authToken,
-      user: testUser,
-    },
-  };
+  const data = await response.json();
+  return data.accessToken;
 }
-export async function login() {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const authToken = generateAuthToken();
-
-  localStorage.setItem("mockSessionToken", authToken);
-
-  return {
-    status: 200,
-    data: {
-      authToken,
-      user: testUser,
-    },
-  };
-}
 
 export async function logout() {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  localStorage.removeItem("mockSessionToken");
+const response = await fetch("http://localhost:8080/members/logout",{
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  credentials: "include",
+});
+if (!response.ok){
+  throw new Error("logout failed");
 }
 
-function generateAuthToken() {
-  return Math.random().toString(36).substring(2);
-}
 
+}

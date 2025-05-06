@@ -1,3 +1,2 @@
-login
 add to cart
 manage orders

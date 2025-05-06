@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/members/login", "/members/refresh", "/members/register", "/books/**", "/categories/**", "/authors/**", "/publishers/**", "/covers/**").permitAll()
+                        .requestMatchers("/members/login", "/members/refresh","members/me", "members/logout", "/members/register", "/books/**", "/categories/**", "/authors/**", "/publishers/**", "/covers/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

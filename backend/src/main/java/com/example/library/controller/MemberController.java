@@ -1,7 +1,9 @@
 package com.example.library.controller;
 
+import com.example.library.dto.GetMeDto;
 import com.example.library.dto.LoginDto;
 import com.example.library.dto.MemberDto;
+import com.example.library.model.Member;
 import com.example.library.service.MemberService;
 import com.example.library.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/members")
@@ -46,7 +49,7 @@ public class MemberController {
 
             ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                     .httpOnly(true)
-                    .secure(true)
+                    .secure(false)
                     .path("/")
                     .sameSite("Strict")
                     .build();
@@ -70,6 +73,31 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        String email = jwtUtil.validateToken(token);
+        GetMeDto dto = memberService.getCurrentUserByEmail(email);
+        if (dto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        return ResponseEntity.ok(dto);
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        ResponseCookie deleteCookie = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .sameSite("Strict")
+                .maxAge(0)
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());
+
+        return ResponseEntity.ok("Logged out");
+    }
+
 
 
 }

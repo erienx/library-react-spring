@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Search from '../components/ui/Search';
 import HeroSection from '../components/ui/HeroSection';
 import useDebounce from '../hooks/useDebounce';
-import useFetchBooksApi from '../hooks/api/useFetchBooksApi';
+import useFetchBooks from '../hooks/api/useFetchBooks';
 import FeaturesInfo from '../components/FeaturesInfo';
 import DisplayBookCards from '../components/DisplayBookCards';
 import { HandleLoadingList } from '../components/HandleLoadingList';
@@ -11,7 +11,7 @@ import { HandleLoadingList } from '../components/HandleLoadingList';
 const Home = () => {
   const [searchInp, setSearchInp] = useState('');
   const debouncedSearchInp = useDebounce(searchInp, 1000);
-  const { books, errorMsg, isLoading } = useFetchBooksApi(debouncedSearchInp);
+  const { books, errorMsg, isLoading } = useFetchBooks(debouncedSearchInp);
 
   return (
     <div className="bg-pattern w-full min-h-screen bg-center bg-cover overflow-x-hidden">

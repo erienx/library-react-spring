@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom"
-import useFetchSingleBookApi from "../hooks/api/useFetchSingleBookApi";
+import useFetchSingleBook from "../hooks/api/useFetchSingleBook";
 import BookDetails from "../components/BookDetails";
 import { HandleLoadingSingleItem } from "../components/HandleLoadingSingleItem";
 
 export const BookPage = () => {
     const params = useParams<{ id: string }>();
-    const { book, errorMsg, isLoading } = useFetchSingleBookApi(params.id);
+    const { book, errorMsg, isLoading } = useFetchSingleBook(params.id);
 
     return (
         <>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Book } from "../../types/types";
 
-const useFetchBooksByCategoryApi = (categoryId: number, limit = 8) => {
+const useFetchBooksByCategory = (categoryId: number, limit = 8) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -51,4 +51,4 @@ const useFetchBooksByCategoryApi = (categoryId: number, limit = 8) => {
   return { books, errorMsg, isLoading };
 };
 
-export default useFetchBooksByCategoryApi;
+export default useFetchBooksByCategory;

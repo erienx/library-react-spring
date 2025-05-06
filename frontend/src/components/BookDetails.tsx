@@ -1,5 +1,5 @@
 import { Book } from "../types/types";
-import useFetchBooksByCategoryApi from "../hooks/api/useFetchBooksByCategoryApi";
+import useFetchBooksByCategory from "../hooks/api/useFetchBooksByCategory";
 import DisplayBookCards from "./DisplayBookCards";
 import BookCover from "./ui/BookCover";
 import BookInfoSection from "./ui/BookInfoSection";
@@ -10,7 +10,7 @@ type BookDetailsProps = {
 };
 
 const BookDetails = ({ book }: BookDetailsProps) => {
-  const { books: similarBooks, errorMsg: similarError, isLoading: isSimilarLoading } = useFetchBooksByCategoryApi(book.category.categoryID, 9);
+  const { books: similarBooks, errorMsg: similarError, isLoading: isSimilarLoading } = useFetchBooksByCategory(book.category.categoryID, 9);
   const isPopular = book.rentedCount > 100;
 
 
@@ -28,15 +28,15 @@ const BookDetails = ({ book }: BookDetailsProps) => {
       <div className="flex flex-col gap-6 ">
         <h2 className="text-4xl font-light text-white">More from <span className="font-bold text-gradient-header">{book.category.categoryName}</span> category</h2>
         <HandleLoadingList
-            isLoading={isSimilarLoading}
-            items={similarBooks}
-            errorMsg={similarError}
-            itemType="books"
-          >
-            <DisplayBookCards books={similarBooks.filter((b) => b.bookID != book.bookID)} />
-          </HandleLoadingList>
+          isLoading={isSimilarLoading}
+          items={similarBooks}
+          errorMsg={similarError}
+          itemType="books"
+        >
+          <DisplayBookCards books={similarBooks.filter((b) => b.bookID != book.bookID)} />
+        </HandleLoadingList>
 
-        
+
       </div>
 
     </div>

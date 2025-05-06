@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetchBooksApi = (value: string) => {
+const useFetchBooks = (value: string) => {
   const [books, setBooks] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -51,4 +51,4 @@ const useFetchBooksApi = (value: string) => {
   return { books, errorMsg, isLoading }
 }
 
-export default useFetchBooksApi;
+export default useFetchBooks;

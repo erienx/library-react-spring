@@ -5,7 +5,7 @@ import DisplayBookCards from '../components/DisplayBookCards';
 import { HandleLoadingList } from '../components/HandleLoadingList';
 
 import { useSearchParams } from 'react-router-dom';
-import useFetchBooksByQueryApi from '../hooks/api/useFetchBooksByQueryApi';
+import useFetchBooksByQuery from '../hooks/api/useFetchBooksByQuery';
 import PaginationButtons from '../components/ui/PaginationButtons';
 
 type SearchBooksTemplateProps = {
@@ -21,7 +21,7 @@ export const SearchBooksTemplate = ({ queryType, placeholder, emptySearchMessage
     const debouncedSearchInp = useDebounce(searchInp, 1000);
     const [currentPage, setCurrentPage] = useState(0);
 
-    const { books, errorMsg, isLoading, totalPages } = useFetchBooksByQueryApi(queryType, debouncedSearchInp, currentPage, 12);
+    const { books, errorMsg, isLoading, totalPages } = useFetchBooksByQuery(queryType, debouncedSearchInp, currentPage, 12);
 
     useEffect(() => {
         if (debouncedSearchInp !== searchTerm) {

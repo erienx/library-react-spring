@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Book } from "../../types/types";
 
 
-const useFetchSingleBookApi = (id: string | undefined) => {
+const useFetchSingleBook = (id: string | undefined) => {
     const [book, setBook] = useState<Book | null>(null);
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -52,4 +52,4 @@ const useFetchSingleBookApi = (id: string | undefined) => {
       return {book,errorMsg,isLoading}
 }
 
-export default useFetchSingleBookApi;
+export default useFetchSingleBook;

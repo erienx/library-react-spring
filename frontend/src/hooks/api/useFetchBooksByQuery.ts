@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Book } from "../../types/types";
 
-const useFetchBooksByQueryApi = (queryType: 'publisher' | 'author', name: string, page: number, size = 20) => {
+const useFetchBooksByQuery = (queryType: 'publisher' | 'author', name: string, page: number, size = 20) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -59,4 +59,4 @@ const useFetchBooksByQueryApi = (queryType: 'publisher' | 'author', name: string
   return { books, errorMsg, isLoading, totalPages };
 };
 
-export default useFetchBooksByQueryApi;
+export default useFetchBooksByQuery;

@@ -2,10 +2,10 @@ package com.example.library.controller;
 
 import com.example.library.dto.MemberDto;
 import com.example.library.service.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +15,7 @@ public class MemberController {
     private MemberService memberService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerMember(@Validated @RequestBody MemberDto memberDto){
+    public ResponseEntity<String> registerMember(@Valid @RequestBody MemberDto memberDto){
         try{
             memberService.register(memberDto);
             return ResponseEntity.ok("registered");

@@ -9,6 +9,7 @@ import FormError from "../components/ui/FormError";
 import ButtonSubmit from "../components/ui/ButtonSubmit";
 import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router-dom";
+import addMember from "../hooks/api/addMember";
 
 
 // Zod schema for Register Form
@@ -48,16 +49,20 @@ export const RegisterForm = () => {
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            console.log(data);
+            await addMember(data);
 
-            //if successful
             reset();
             navigate("/");
-        } catch {
-            setError("root", {
-                message: "Something went wrong. Try again later.",
-            });
+        } catch (err) {
+            if (err instanceof Error) {
+                setError("root", {
+                    message: err.message,
+                });
+            } else {
+                setError("root", {
+                    message: "An unexpected error occurred",
+                });
+            }
         }
     };
 

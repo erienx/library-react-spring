@@ -10,9 +10,9 @@ import ButtonSubmit from "../components/ui/ButtonSubmit";
 import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router-dom";
 import addMember from "../hooks/api/addMember";
+import { useAuth } from "./providers/AuthContext";
 
 
-// Zod schema for Register Form
 const schema = z
     .object({
         firstName: z.string().min(1, { message: "First name is required" }),
@@ -47,9 +47,12 @@ export const RegisterForm = () => {
 
     const navigate = useNavigate();
 
+    const { handleLogin } = useAuth();
+
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
             await addMember(data);
+            await handleLogin(data.email, data.password);
 
             reset();
             navigate("/");

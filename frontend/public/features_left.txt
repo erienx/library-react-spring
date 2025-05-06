@@ -1,2 +1,4 @@
 add to cart
-manage orders
+cart
+orders
+manage orders(admin)

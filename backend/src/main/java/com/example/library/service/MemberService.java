@@ -23,6 +23,10 @@ public class MemberService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public Optional<Member> getMemberById(Long id){
+        return memberRepository.getMemberByMemberID(id);
+    }
+
 
     public void register(MemberDto memberDto) {
         if (!memberDto.password().equals(memberDto.confirmPassword())) {
@@ -58,6 +62,7 @@ public class MemberService {
                     .firstName(user.get().getFirstName())
                     .lastName(user.get().getLastName())
                     .email(user.get().getEmail())
+                    .role(user.get().isAdmin() ? "admin" : "user")
                     .build();
         }
 

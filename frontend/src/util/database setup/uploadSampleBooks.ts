@@ -64,6 +64,7 @@ const uploadAllBooks = async () => {
       rating: parseFloat(randomFloat(3.5, 5)),
       publisher: getRandomItem(publisherList),
       category: getRandomItem(categoryList),
+      copyCount: Math.floor(Math.random()*4+1)
     };
 
     await uploadBook(bookData);

@@ -1,5 +1,6 @@
 package com.example.library.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -45,6 +46,7 @@ public class Book {
     private Author author;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<BookCopy> bookCopies;
 }
 

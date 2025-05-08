@@ -6,6 +6,7 @@ import com.example.library.model.Book;
 import com.example.library.model.Category;
 import com.example.library.model.Publisher;
 import com.example.library.repository.BookRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,10 @@ public class BookService {
     private CategoryService categoryService;
     @Autowired
     private PublisherService publisherService;
+    @Autowired
+    private BookCopyService bookCopyService;
 
+    @Transactional
     public Book uploadBook(BookUploadRequest bookRequest){
         Author author = authorService.getOrAddAuthor(bookRequest.author());
         Category cat = categoryService.getOrAddCategory(bookRequest.category());
@@ -41,8 +45,10 @@ public class BookService {
                 .pages(bookRequest.pages())
                 .rentedCount(bookRequest.rentedCount())
                 .build();
+        book = bookRepository.save(book);
+        bookCopyService.addBookCopies(book, bookRequest.copyCount());
 
-        return bookRepository.save(book);
+        return book;
     }
 
     public List<Book> findBooksOptionalTitle(String title){

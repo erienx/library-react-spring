@@ -1,5 +1,6 @@
 package com.example.library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +20,6 @@ public class BookCopy {
 
     @ManyToOne
     @JoinColumn(name = "bookID", nullable = false)
+    @JsonBackReference
     private Book book;
 }

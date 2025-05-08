@@ -8,6 +8,7 @@ type uploadBookProps = {
   rating: number;
   publisher: string;
   category: string;
+  copyCount: number;
 }
 
 async function uploadBook(data: uploadBookProps): Promise<string> {

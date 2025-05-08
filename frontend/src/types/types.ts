@@ -29,7 +29,7 @@ export type Book = {
 };
 
 export type User = {
-    id: number;
+    memberId: number;
     email: string;
     firstName: string;
     lastName: string;

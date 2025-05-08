@@ -6,6 +6,7 @@ type AuthContext = {
     currentUser?: User | null;
     handleLogin: (email: string, password: string) => Promise<void>;
     handleLogout: () => Promise<void>;
+    loading: boolean;
   };
 
 export const AuthContext = createContext<AuthContext | undefined>(undefined);

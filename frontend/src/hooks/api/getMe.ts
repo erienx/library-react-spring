@@ -13,7 +13,6 @@ async function getMe(accessToken: string) {
     }
 
     const data: User = await response.json();
-    console.log(data);
     return data;
 }
 export default getMe;

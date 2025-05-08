@@ -11,6 +11,7 @@ type BookDetailsProps = {
 
 const BookDetails = ({ book }: BookDetailsProps) => {
   const { books: similarBooks, errorMsg: similarError, isLoading: isSimilarLoading } = useFetchBooksByCategory(book.category.categoryID, 9);
+
   const isPopular = book.rentedCount > 100;
 
 

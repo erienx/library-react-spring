@@ -11,6 +11,7 @@ type AuthProviderProps = PropsWithChildren;
 export default function AuthProvider({ children }: AuthProviderProps) {
     const [authToken, setAuthToken] = useState<string | null>(null);
     const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function tryRefresh() {
@@ -23,6 +24,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
             } catch (err) {
                 setAuthToken(null);
                 setCurrentUser(null);
+            }
+            finally {
+                setLoading(false);
             }
         }
 
@@ -49,7 +53,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ authToken, currentUser, handleLogin, handleLogout }}>
+        <AuthContext.Provider value={{ authToken, currentUser, handleLogin, handleLogout , loading}}>
             {children}
         </AuthContext.Provider>
     );

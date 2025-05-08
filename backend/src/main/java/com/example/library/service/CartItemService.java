@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CartItemService {
     @Autowired
@@ -28,4 +30,12 @@ public class CartItemService {
                 .build();
         return cartItemRepository.save(cartItem);
     }
+
+    @Transactional
+    public void removeCartItem(Long memberId, Long bookId) {
+        Cart cart = cartService.getOrCreateUserCart(memberId);
+        Optional<CartItem> cartItem = cartItemRepository.findByCartAndBookCopy_Book_BookID(cart, bookId);
+        cartItem.ifPresent(cartItemRepository::delete);
+    }
+
 }

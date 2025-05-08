@@ -32,4 +32,15 @@ public class CartController {
     public CartItem addItemToCart(@RequestBody AddItemCartDto addItemCartDto){
         return cartItemService.addCartItem(addItemCartDto.memberId(), addItemCartDto.bookId());
     }
+    @DeleteMapping("/items")
+    public ResponseEntity<?> removeItemFromCart(@RequestParam Long memberId, @RequestParam Long bookId) {
+        cartItemService.removeCartItem(memberId, bookId);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/items/contains")
+    public boolean isBookInCart(@RequestParam Long memberId, @RequestParam Long bookId) {
+        Cart cart = cartService.getOrCreateUserCart(memberId);
+        return cart.getCartItems().stream()
+                .anyMatch(item -> item.getBookCopy().getBook().getBookID().equals(bookId));
+    }
 }

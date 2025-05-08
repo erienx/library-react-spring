@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Book } from "../../types/types";
 import { Link } from "react-router-dom";
 import Rating from "../ui/Rating";
@@ -12,6 +12,27 @@ const BookInfoSection = ({ book }: BookInfoSectionProps) => {
     const { currentUser, loading: loadingUser, authToken } = useAuth();
     const [addedToCart, setAddedToCart] = useState(false);
     const [loadingCart, setLoadingCart] = useState(false);
+    useEffect(() => {
+        const checkCart = async () => {
+            if (!currentUser || !book.bookID) return;
+            try {
+                const response = await fetch(`http://localhost:8080/carts/items/contains?memberId=${currentUser.memberId}&bookId=${book.bookID}`, {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                });
+    
+                if (response.ok) {
+                    const result = await response.json();
+                    setAddedToCart(result);
+                }
+            } catch (error) {
+                console.error("Failed to check cart status", error);
+            }
+        };
+    
+        checkCart();
+    }, [book.bookID, currentUser, authToken]);
 
     const handleAddToCart = async () => {
         if (!currentUser || !book.bookID) return;
@@ -40,8 +61,25 @@ const BookInfoSection = ({ book }: BookInfoSectionProps) => {
         }
     };
 
-    const handleRemoveFromCart = () => {
-        setAddedToCart(false);
+    const handleRemoveFromCart = async () => {
+        if (!currentUser || !book.bookID) return;
+        setLoadingCart(true);
+        try {
+            const response = await fetch(`http://localhost:8080/carts/items?memberId=${currentUser.memberId}&bookId=${book.bookID}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+    
+            if (!response.ok) throw new Error("Failed to remove from cart");
+    
+            setAddedToCart(false);
+        } catch (error) {
+            console.error("Error removing from cart:", error);
+        } finally {
+            setLoadingCart(false);
+        }
     };
 
     return (

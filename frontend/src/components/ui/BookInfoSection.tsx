@@ -3,6 +3,9 @@ import { Book } from "../../types/types";
 import { Link } from "react-router-dom";
 import Rating from "../ui/Rating";
 import { useAuth } from "../providers/AuthContext";
+import { checkBookInCart } from "../../hooks/api/cart/checkBookInCart";
+import { removeBookFromCart } from "../../hooks/api/cart/removeBookFromCart";
+import { addBookToCart } from "../../hooks/api/cart/addBookToCart";
 
 type BookInfoSectionProps = {
     book: Book;
@@ -14,73 +17,42 @@ const BookInfoSection = ({ book }: BookInfoSectionProps) => {
     const [loadingCart, setLoadingCart] = useState(false);
     useEffect(() => {
         const checkCart = async () => {
-            if (!currentUser || !book.bookID) return;
-            try {
-                const response = await fetch(`http://localhost:8080/carts/items/contains?memberId=${currentUser.memberId}&bookId=${book.bookID}`, {
-                    headers: {
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                });
-    
-                if (response.ok) {
-                    const result = await response.json();
-                    setAddedToCart(result);
-                }
-            } catch (error) {
-                console.error("Failed to check cart status", error);
-            }
+          if (!currentUser || !book.bookID) return;
+          try {
+            const result = await checkBookInCart(currentUser.memberId, book.bookID, authToken);
+            setAddedToCart(result);
+          } catch (error) {
+            console.error("failed to check cart status", error);
+          }
         };
-    
         checkCart();
-    }, [book.bookID, currentUser, authToken]);
-
-    const handleAddToCart = async () => {
+      }, [book.bookID, currentUser, authToken]);
+      
+      const handleAddToCart = async () => {
         if (!currentUser || !book.bookID) return;
         setLoadingCart(true);
         try {
-            const response = await fetch("http://localhost:8080/carts/items", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${authToken}`,
-                },
-                body: JSON.stringify({
-                    memberId: currentUser.memberId,
-                    bookId: book.bookID,
-                }),
-                credentials: "include",
-            });
-
-            if (!response.ok) throw new Error("failed to add to cart");
-
-            setAddedToCart(true);
+          await addBookToCart(currentUser.memberId, book.bookID, authToken);
+          setAddedToCart(true);
         } catch (error) {
-            console.error("error adding to cart:", error);
+          console.error("error adding to cart:", error);
         } finally {
-            setLoadingCart(false);
+          setLoadingCart(false);
         }
-    };
-
-    const handleRemoveFromCart = async () => {
+      };
+      
+      const handleRemoveFromCart = async () => {
         if (!currentUser || !book.bookID) return;
         setLoadingCart(true);
         try {
-            const response = await fetch(`http://localhost:8080/carts/items?memberId=${currentUser.memberId}&bookId=${book.bookID}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
-            });
-    
-            if (!response.ok) throw new Error("Failed to remove from cart");
-    
-            setAddedToCart(false);
+          await removeBookFromCart(currentUser.memberId, book.bookID, authToken);
+          setAddedToCart(false);
         } catch (error) {
-            console.error("Error removing from cart:", error);
+          console.error("error removing from cart:", error);
         } finally {
-            setLoadingCart(false);
+          setLoadingCart(false);
         }
-    };
+      };
 
     return (
         <section className="flex flex-col flex-grow gap-6">

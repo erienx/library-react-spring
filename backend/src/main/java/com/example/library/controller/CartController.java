@@ -1,6 +1,7 @@
 package com.example.library.controller;
 
 import com.example.library.dto.AddItemCartDto;
+import com.example.library.model.Book;
 import com.example.library.model.Cart;
 import com.example.library.model.CartItem;
 import com.example.library.model.Member;
@@ -42,5 +43,10 @@ public class CartController {
         Cart cart = cartService.getOrCreateUserCart(memberId);
         return cart.getCartItems().stream()
                 .anyMatch(item -> item.getBookCopy().getBook().getBookID().equals(bookId));
+    }
+    @GetMapping("/items")
+    public ResponseEntity<List<Book>> getCartItems(@RequestParam Long memberId) {
+        List<Book> cartBooks = cartService.getCartBooksByMemberId(memberId);
+        return ResponseEntity.ok(cartBooks);
     }
 }

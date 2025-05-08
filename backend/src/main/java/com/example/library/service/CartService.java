@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.model.Book;
 import com.example.library.model.Cart;
 import com.example.library.model.CartItem;
 import com.example.library.model.Member;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CartService {
@@ -28,5 +31,9 @@ public class CartService {
     }
     public Page<Cart> getAllCarts(Pageable pageable){
         return cartRepository.findAll(pageable);
+    }
+    public List<Book> getCartBooksByMemberId(Long memberId) {
+        Cart cart = getOrCreateUserCart(memberId);
+        return cart.getCartItems().stream().map(cartItem -> cartItem.getBookCopy().getBook()).distinct().toList();
     }
 }

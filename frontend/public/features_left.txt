@@ -1,3 +1,2 @@
-cart display
 orders
 manage orders(admin)

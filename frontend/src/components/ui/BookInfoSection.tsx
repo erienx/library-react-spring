@@ -1,76 +1,16 @@
-import { useEffect, useState } from "react";
 import { Book } from "../../types/types";
 import { Link } from "react-router-dom";
 import Rating from "../ui/Rating";
 import { useAuth } from "../providers/AuthContext";
-import { checkBookInCart } from "../../hooks/api/cart/checkBookInCart";
-import { removeBookFromCart } from "../../hooks/api/cart/removeBookFromCart";
-import { addBookToCart } from "../../hooks/api/cart/addBookToCart";
-import { fetchBookCopies } from "../../hooks/api/fetchBooksCopies";
+import { useCartActions } from "../../hooks/useCartActions";
 
 type BookInfoSectionProps = {
   book: Book;
 };
 
 const BookInfoSection = ({ book }: BookInfoSectionProps) => {
-  const { currentUser, loading: loadingUser, authToken } = useAuth();
-  const [addedToCart, setAddedToCart] = useState(false);
-  const [loadingCart, setLoadingCart] = useState(false);
-  const [availableCopies, setAvailableCopies] = useState<number | null>(null);
-  const [totalCopies, setTotalCopies] = useState<number | null>(null);
-
-  useEffect(() => {
-    const checkCart = async () => {
-      if (!currentUser || !book.bookID) return;
-      try {
-        const result = await checkBookInCart(currentUser.memberId, book.bookID, authToken);
-        setAddedToCart(result);
-      } catch (error) {
-        console.error("Failed to check cart status", error);
-      }
-    };
-    checkCart();
-  }, [book.bookID, currentUser, authToken]);
-
-  useEffect(() => {
-    const fetchCopyCount = async () => {
-      if (!book.bookID) return;
-      try {
-        const { availableCopies, totalCopies } = await fetchBookCopies(book.bookID);
-        setAvailableCopies(availableCopies);
-        setTotalCopies(totalCopies);
-      } catch (err) {
-        console.error("Failed to fetch copy count", err);
-      }
-    };
-    fetchCopyCount();
-  }, [book.bookID]);
-
-  const handleAddToCart = async () => {
-    if (!currentUser || !book.bookID) return;
-    setLoadingCart(true);
-    try {
-      await addBookToCart(currentUser.memberId, book.bookID, authToken);
-      setAddedToCart(true);
-    } catch (error) {
-      console.error("error adding to cart:", error);
-    } finally {
-      setLoadingCart(false);
-    }
-  };
-
-  const handleRemoveFromCart = async () => {
-    if (!currentUser || !book.bookID) return;
-    setLoadingCart(true);
-    try {
-      await removeBookFromCart(currentUser.memberId, book.bookID, authToken);
-      setAddedToCart(false);
-    } catch (error) {
-      console.error("error removing from cart:", error);
-    } finally {
-      setLoadingCart(false);
-    }
-  };
+  const { currentUser, loading: loadingUser } = useAuth();
+  const { addedToCart, loadingCart, availableCopies, totalCopies, handleAddToCart, handleRemoveFromCart} = useCartActions(book);
 
   return (
     <section className="flex flex-col flex-grow gap-6">
@@ -119,7 +59,8 @@ const BookInfoSection = ({ book }: BookInfoSectionProps) => {
               disabled={loadingCart || availableCopies === 0}
               className="px-6 py-3 bg-accent1 text-white font-semibold rounded-xl shadow-md hover:bg-accent1-hover disabled:opacity-50">
               {loadingCart ? "Adding..." : "Add to Cart"}
-            </button>) : (
+            </button>
+          ) : (
             <button
               onClick={handleRemoveFromCart}
               className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl shadow-md hover:bg-red-700">

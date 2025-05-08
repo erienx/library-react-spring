@@ -1,7 +1,9 @@
 package com.example.library.controller;
 
+import com.example.library.dto.BookCopyCountDto;
 import com.example.library.dto.BookUploadRequest;
 import com.example.library.model.*;
+import com.example.library.service.BookCopyService;
 import com.example.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,8 @@ import java.util.Optional;
 public class BookController {
     @Autowired
     private BookService bookService;
+    @Autowired
+    private BookCopyService bookCopyService;
 
     @GetMapping
     public List<Book> getAllBooks(@RequestParam(required = false) String search) {
@@ -45,6 +49,12 @@ public class BookController {
         Page<Book> books = bookService.findBooksByPublisherName(name, pageable);
         return ResponseEntity.ok(books);
     }
+
+    @GetMapping("/{bookId}/copies")
+    public BookCopyCountDto getBookCopyCount(@PathVariable Long bookId) {
+        return bookCopyService.getBookCopyCount(bookId);
+    }
+
 
     @PostMapping
     public Book uploadBook(@RequestBody BookUploadRequest bookRequest) {

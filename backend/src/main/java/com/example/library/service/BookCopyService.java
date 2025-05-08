@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.dto.BookCopyCountDto;
 import com.example.library.model.Book;
 import com.example.library.model.BookCopy;
 import com.example.library.repository.BookCopyRepository;
@@ -29,5 +30,10 @@ public class BookCopyService {
             copies.add(BookCopy.builder().book(book).build());
         }
         bookCopyRepository.saveAll(copies);
+    }
+    public BookCopyCountDto getBookCopyCount(Long bookId) {
+        int available = bookCopyRepository.countByBook_BookIDAndIsRentedFalse(bookId);
+        int total = bookCopyRepository.countByBook_BookID(bookId);
+        return new BookCopyCountDto(available, total);
     }
 }

@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart, Long> {
     Optional<Cart> findByMember(Member member);
     Page<Cart> findAll(Pageable pageable);
+    void deleteByMember(Member member);
 }

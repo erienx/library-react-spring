@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import CartIcon from "../../assets/cart-icon.svg?react"
+import OrderIcon from "../../assets/orders-icon.svg?react"
 import { useAuth } from "../providers/AuthContext";
 import { useHasAccess } from "../../hooks/useHasAccess";
 import AdminSelect from "../ui/AdminSelect";
@@ -34,6 +35,7 @@ const UpperHeader = () => {
                             <UpperHeaderLink to="login" text="Log in" />
                         </>
                     )}
+                    {currentUser && <UpperHeaderLink to="orders" text="Orders" Icon={OrderIcon} />}
 
                     {currentUser && <UpperHeaderLink to="cart" text="Items" Icon={CartIcon} />}
 

@@ -18,6 +18,7 @@ import SearchBooksAuthor from './pages/SearchBooksAuthor.tsx'
 import SearchBooksPublisher from './pages/SearchBooksPublisher.tsx'
 import ManageRentalsPage from './pages/admin/ManageRentalsPage.tsx'
 import AddBookPage from './pages/admin/AddBookPage.tsx'
+import OrdersPage from './pages/OrdersPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: <CartPage />
+      },
+      {
+        path: 'orders',
+        element: <OrdersPage />
       },
       {
         path: 'admin/manage-rentals',

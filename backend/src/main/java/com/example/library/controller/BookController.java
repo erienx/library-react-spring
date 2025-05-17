@@ -8,6 +8,7 @@ import com.example.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,8 @@ public class BookController {
     private BookCopyService bookCopyService;
 
     @GetMapping
-    public List<Book> getAllBooks(@RequestParam(required = false) String search) {
-        return bookService.findBooksOptionalTitle(search);
+    public Page<Book> getAllBooks(@RequestParam(required = false) String search, @PageableDefault(size = 8) Pageable pageable) {
+        return bookService.findBooksOptionalTitle(search, pageable);
     }
 
     @GetMapping("/{id}")

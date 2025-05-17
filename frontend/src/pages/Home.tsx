@@ -9,9 +9,15 @@ import { HandleLoadingList } from '../components/HandleLoadingList';
 
 
 const Home = () => {
+  const [page, setPage] = useState(0);
+  const size = 8;
   const [searchInp, setSearchInp] = useState('');
   const debouncedSearchInp = useDebounce(searchInp, 1000);
-  const { books, errorMsg, isLoading } = useFetchBooks(debouncedSearchInp);
+  const { books, errorMsg, isLoading, hasMore } = useFetchBooks(debouncedSearchInp, page, size);
+
+  const loadMoreBooks = () => {
+    setPage(prev => prev + 1);
+  };
 
   return (
     <div className="bg-pattern w-full min-h-screen bg-center bg-cover overflow-x-hidden">
@@ -30,7 +36,7 @@ const Home = () => {
             searchInp={searchInp}
             itemType="books"
           >
-            <DisplayBookCards books={books} loadChunk={8} />
+            <DisplayBookCards books={books} onLoadMore={loadMoreBooks} hasMore={hasMore} />
           </HandleLoadingList>
 
 

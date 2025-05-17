@@ -10,7 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-    List<Book> findBookByTitleContainingIgnoreCase(String title);
+    Page<Book> findBookByTitleContainingIgnoreCase(String title, Pageable pageable);
+
 
     Page<Book> findByCategoryCategoryID(Long id, Pageable pageable);
 

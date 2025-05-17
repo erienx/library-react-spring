@@ -1,38 +1,42 @@
 import { useState, useEffect } from "react";
+import { Book } from "../../types/types";
 
-const useFetchBooks = (value: string) => {
-  const [books, setBooks] = useState([]);
+const useFetchBooks = (search: string, page: number, size: number) => {
+  const [books, setBooks] = useState<Book[]>([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-
-
+  const [hasMore, setHasMore] = useState(true); // For knowing if more pages exist
 
   useEffect(() => {
     const controller = new AbortController();
 
-    const fetchData = async (value = '') => {
+    const fetchData = async () => {
       setIsLoading(true);
-      // await new Promise(resolve => setTimeout(resolve,2000));
+
       try {
-        const url = value ? `http://localhost:8080/books?search=${value}` : "http://localhost:8080/books";
+        const params = new URLSearchParams({
+          page: page.toString(),
+          size: size.toString(),
+        });
+        if (search) params.append('search', search);
 
+        const res = await fetch(`http://localhost:8080/books?${params}`, {
+          signal: controller.signal,
+        });
 
-        const res = await fetch(url, { signal: controller.signal });
-        if (!res.ok) {
-          throw new Error("Books fetch failed.");
-        }
+        if (!res.ok) throw new Error("Books fetch failed.");
 
         const data = await res.json();
 
-        if (!data) {
+        if (!data || !data.content) {
           setErrorMsg("No books found.");
           setBooks([]);
           return;
         }
 
-        setBooks(data);
-      }
-      catch (error: any) {
+        setBooks(prev => [...prev, ...data.content]);
+        setHasMore(!data.last); 
+      } catch (error: any) {
         if (error.name !== "AbortError") {
           setErrorMsg("Error fetching books.");
           setBooks([]);
@@ -42,13 +46,13 @@ const useFetchBooks = (value: string) => {
       }
     };
 
-    fetchData(value);
-    return () => {
-      controller.abort();
-    };
-  }, [value]);
+    fetchData();
 
-  return { books, errorMsg, isLoading }
-}
+    return () => controller.abort();
+  }, [search, page, size]);
+
+  return { books, errorMsg, isLoading, hasMore };
+};
+
 
 export default useFetchBooks;

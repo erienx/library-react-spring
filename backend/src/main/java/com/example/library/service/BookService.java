@@ -51,11 +51,11 @@ public class BookService {
         return book;
     }
 
-    public List<Book> findBooksOptionalTitle(String title){
+    public Page<Book> findBooksOptionalTitle(String title, Pageable pageable){
         if (title!=null && !title.isEmpty()){
-            return bookRepository.findBookByTitleContainingIgnoreCase(title);
+            return bookRepository.findBookByTitleContainingIgnoreCase(title, pageable);
         }
-        return bookRepository.findAll();
+        return bookRepository.findAll(pageable);
     }
     public Optional<Book> findBookById(Long id){
         return bookRepository.findById(id);

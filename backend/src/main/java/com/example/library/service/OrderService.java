@@ -43,6 +43,7 @@ public class OrderService {
                     .bookCopy(cartItem.getBookCopy())
                     .build();
             order.getOrderItems().add(orderItem);
+            orderItem.getBookCopy().setRented(true);
         }
         cart.getCartItems().clear();
         cartRepository.save(cart);
@@ -81,6 +82,7 @@ public class OrderService {
             case RENTED -> {
                 order.setStatus(OrderStatus.COMPLETED);
                 order.setCompletedAt(LocalDateTime.now());
+                order.getOrderItems().forEach(item -> item.getBookCopy().setRented(false));
             }
             case COMPLETED -> {
                 return;

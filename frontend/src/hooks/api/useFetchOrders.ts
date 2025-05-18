@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import { Order } from "../../types/types";
 
-const useFetchOrders = (
-  memberId: number | undefined,
-  token: string | undefined | null,
-  orderType: string
-) => {
+const useFetchOrders = ( memberId: number | undefined, token: string | undefined | null, orderType: string) => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const fetchData = async () => {
-    if (!memberId || !token || !orderType) return;
+    if (!memberId || !token || !orderType) {
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch(`http://localhost:8080/orders?memberId=${memberId}&status=${orderType}`, {

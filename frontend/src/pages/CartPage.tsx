@@ -3,7 +3,6 @@ import { useAuth } from "../components/providers/AuthContext";
 import useFetchCartItems from "../hooks/api/cart/useFetchCartItems";
 import DisplayBookList from "../components/DisplayBookList";
 import ButtonRegular from "../components/ui/ButtonRegular";
-import { useState } from "react";
 import useCommitOrder from "../hooks/api/cart/useCommitOrder";
 
 const CartPage = () => {

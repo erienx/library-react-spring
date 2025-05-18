@@ -35,3 +35,8 @@ export type User = {
     lastName: string;
     role: 'admin' | 'user';
 }
+export type Order = {
+    orderID: number;
+    createdAt: string;
+    books: Book[];
+};

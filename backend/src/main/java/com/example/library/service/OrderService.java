@@ -1,14 +1,17 @@
 package com.example.library.service;
 
+import com.example.library.dto.OrderDto;
 import com.example.library.model.*;
 import com.example.library.repository.CartItemRepository;
 import com.example.library.repository.CartRepository;
 import com.example.library.repository.MemberRepository;
 import com.example.library.repository.OrderRepository;
 import com.example.library.util.OrderStatus;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,17 +49,23 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public List<OrderItem> getOrderItemsByStatus(Long memberId, OrderStatus status) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("member not found"));
+    public List<OrderDto> getOrdersByMemberAndStatus(Long memberId, String status) {
+        OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
+        return orderRepository.findByMember_MemberIDAndStatus(memberId, orderStatus).stream()
+                .map(OrderDto::fromOrder)
+                .toList();
+    }
+    public boolean cancelOrder(Long orderId, Long memberId) {
+        Order order = orderRepository.findByOrderIDAndMember_MemberID(orderId, memberId)
+                .orElseThrow(() -> new EntityNotFoundException("order not found or does not belong to this member"));
 
-        List<Order> orders = orderRepository.findByMemberAndStatus(member, status);
-
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (Order order : orders) {
-            orderItems.addAll(order.getOrderItems());
+        if (order.getStatus() != OrderStatus.PENDING) {
+            throw new IllegalStateException("only pending orders can be cancelled");
         }
 
-        return orderItems;
+        orderRepository.delete(order);
+
+
+        return true;
     }
 }

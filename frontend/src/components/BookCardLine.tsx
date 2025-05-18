@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useCartActions } from "../hooks/useCartActions";
 import { Book } from "../types/types";
 import FullStarIcon from "../assets/stars/star-full-icon.svg?react";
+import RemoveButton from "./ui/RemoveButton";
 
 
 const BookCardLine = ({ book, onRemove }: { book: Book; onRemove?: () => void }) => {
@@ -40,17 +41,7 @@ const BookCardLine = ({ book, onRemove }: { book: Book; onRemove?: () => void })
                 </div>
 
 
-                {onRemove && <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        handleRemoveClick();
-                    }}
-                    disabled={loadingCart}
-                    className="cursor-pointer px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg text-sm font-semibold shadow filter saturate-80"
-                >
-                    {loadingCart ? "Removing..." : "Remove"}
-                </button>}
+                {onRemove && <RemoveButton onClick={handleRemoveClick} loading={loadingCart} />}
             </li>
         </Link>
 

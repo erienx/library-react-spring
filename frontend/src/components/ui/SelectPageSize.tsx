@@ -6,9 +6,9 @@ type SelectPageSizeProps = {
 };
 
 const pageSizeOptions = [
-    { value: '8', label: '8 per page' },
-    { value: '16', label: '16 per page' },
-    { value: '32', label: '32 per page' },
+    { value: '8', label: '8' },
+    { value: '16', label: '16' },
+    { value: '32', label: '32' },
 ];
 
 const SelectPageSize = ({ size, handleSizeChange }: SelectPageSizeProps) => {

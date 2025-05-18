@@ -43,7 +43,7 @@ const Home = () => {
                   />
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-y-2 sm:gap-x-2 w-full sm:w-auto">
-                  <p className="font-medium sm:text-2xl text-xl text-white">Page size:</p>
+                  <p className="font-medium sm:text-2xl text-xl text-white">Books per page:</p>
                   <SelectPageSize size={size} handleSizeChange={(val) => {
                     setSize(val);
                     setPage(0);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Order } from "../../types/types";
 
-const useFetchOrders = ( memberId: number | undefined, token: string | undefined | null, orderType: string) => {
+const useFetchOrders = ( memberId: number | undefined | null, token: string | undefined | null, orderType: string) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");

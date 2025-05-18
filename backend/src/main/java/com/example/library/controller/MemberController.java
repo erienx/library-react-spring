@@ -3,6 +3,7 @@ package com.example.library.controller;
 import com.example.library.dto.GetMeDto;
 import com.example.library.dto.LoginDto;
 import com.example.library.dto.MemberDto;
+import com.example.library.dto.MemberWIthIdDto;
 import com.example.library.model.Member;
 import com.example.library.service.MemberService;
 import com.example.library.util.JwtUtil;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,6 +25,17 @@ import java.util.Optional;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MemberWIthIdDto>> searchMembers(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName
+    ) {
+        List<MemberWIthIdDto> members = memberService.searchMembers(email, firstName, lastName);
+        return ResponseEntity.ok(members);
+    }
+
 
     @PostMapping("/register")
     public ResponseEntity<String> registerMember(@Valid @RequestBody MemberDto memberDto){

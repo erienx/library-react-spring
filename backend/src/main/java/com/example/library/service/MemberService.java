@@ -3,12 +3,14 @@ package com.example.library.service;
 import com.example.library.dto.GetMeDto;
 import com.example.library.dto.LoginDto;
 import com.example.library.dto.MemberDto;
+import com.example.library.dto.MemberWIthIdDto;
 import com.example.library.model.Member;
 import com.example.library.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -67,5 +69,24 @@ public class MemberService {
         }
 
         return null;
+    }
+
+    public List<MemberWIthIdDto> searchMembers(String email, String firstName, String lastName) {
+        String e = (email != null && !email.isBlank()) ? email : null;
+        String f = (firstName != null && !firstName.isBlank()) ? firstName : null;
+        String l = (lastName != null && !lastName.isBlank()) ? lastName : null;
+
+        List<Member> matched = memberRepository.searchMembersByFields(e, f, l);
+
+        return matched.stream()
+                .map(member -> new MemberWIthIdDto(
+                        member.getMemberID(),
+                        member.getFirstName(),
+                        member.getLastName(),
+                        member.getEmail(),
+                        "",
+                        ""
+                ))
+                .toList();
     }
 }

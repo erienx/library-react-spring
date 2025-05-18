@@ -71,4 +71,15 @@ public class OrderController {
                     .body(Map.of("error", "error: " + e.getMessage()));
         }
     }
+    @PostMapping("/{orderId}/forward")
+    public ResponseEntity<?> forwardOrder(@PathVariable Long orderId) {
+        try {
+            orderService.forwardOrder(orderId);
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
 }

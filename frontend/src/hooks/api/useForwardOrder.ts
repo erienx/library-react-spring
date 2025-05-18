@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-type useForwardOrderProps ={
+type useForwardOrderReturn ={
   forwardOrder: (orderId: number) => Promise<boolean>;
   loading: boolean;
   error: string | null;
 }
 
-const useForwardOrder = (memberId: number | undefined, token: string | undefined | null) => {
+const useForwardOrder = (memberId: number | undefined, token: string | undefined | null): useForwardOrderReturn => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +23,7 @@ const useForwardOrder = (memberId: number | undefined, token: string | undefined
       const res = await fetch(`http://localhost:8080/orders/${orderId}/forward`, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       });

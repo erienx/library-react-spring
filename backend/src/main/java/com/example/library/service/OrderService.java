@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,4 +69,25 @@ public class OrderService {
 
         return true;
     }
+    public void forwardOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("order not found"));
+
+        switch (order.getStatus()) {
+            case PENDING -> {
+                order.setStatus(OrderStatus.RENTED);
+                order.setRentedAt(LocalDateTime.now());
+            }
+            case RENTED -> {
+                order.setStatus(OrderStatus.COMPLETED);
+                order.setCompletedAt(LocalDateTime.now());
+            }
+            case COMPLETED -> {
+                return;
+            }
+        }
+
+        orderRepository.save(order);
+    }
+
 }

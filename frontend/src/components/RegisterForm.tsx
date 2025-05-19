@@ -1,5 +1,4 @@
 import {  useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import FormError from "../components/ui/FormError";
@@ -11,19 +10,6 @@ import { useAuth } from "./providers/AuthContext";
 import useFormDefinition from "../hooks/api/useFormDefinition";
 import { iconMap } from "../util/iconMap";
 
-
-const schema = z
-    .object({
-        firstName: z.string().min(1, { message: "First name is required" }),
-        lastName: z.string().min(1, { message: "Last name is required" }),
-        email: z.string().email("Please enter a valid email address"),
-        password: z.string().min(8, { message: "Password must have at least 8 characters" }),
-        confirmPassword: z.string().min(1, { message: "Please confirm your password" }),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        path: ["confirmPassword"],
-        message: "Passwords do not match",
-    });
 
 
 export const RegisterForm = () => {

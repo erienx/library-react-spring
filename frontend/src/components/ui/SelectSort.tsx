@@ -1,3 +1,5 @@
+
+import { useTranslation } from 'react-i18next';
 import BaseSelect from './BaseSelect';
 
 type SelectSortProps = {
@@ -5,15 +7,16 @@ type SelectSortProps = {
     handleSortChange: (value: string) => void;
 };
 
-const sortOptions = [
-    { value: 'rating,desc', label: 'Highest Rated' },
-    { value: 'rating,asc', label: 'Lowest Rated' },
-    { value: 'rentedCount,desc', label: 'Highest Rented Count' },
-    { value: 'rentedCount,asc', label: 'Lowest Rented Count' },
-    { value: 'addedDate,desc', label: 'Newest Added' },
-];
 
 const SelectSort = ({ sortBy, handleSortChange }: SelectSortProps) => {
+    const { t } = useTranslation();
+    const sortOptions = [
+        { value: 'rating,desc', label: t('highestRated') },
+        { value: 'rating,asc', label: t('lowestRated') },
+        { value: 'rentedCount,desc', label: t('highestRented') },
+        { value: 'rentedCount,asc', label: t('loswestRented') },
+        { value: 'addedDate,desc', label: t('newestAdded') },
+    ];
     return (
         <BaseSelect value={sortBy} onChange={handleSortChange} placeholder="Sort by" options={sortOptions} />
     );

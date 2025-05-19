@@ -29,7 +29,7 @@ const Home = () => {
     <div className="bg-pattern w-full min-h-screen bg-center bg-cover overflow-x-hidden">
       <div className="px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10 gap-3">
         <HeroSection />
-        <Search searchInp={searchInp} setSearchInp={setSearchInp} placeholder='Search for a book' />
+        <Search searchInp={searchInp} setSearchInp={setSearchInp} placeholder={t('searchBook')} />
 
         <section className="space-y-9">
           <h2 className="mt-[40px] text-2xl font-bold sm:text-3xl">

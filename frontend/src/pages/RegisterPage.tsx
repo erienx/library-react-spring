@@ -3,10 +3,12 @@ import AuthHeader from "../components/ui/AuthHeader"
 import RegisterForm from "../components/RegisterForm"
 import { useAuth } from "../components/providers/AuthContext";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (currentUser) navigate('/');
@@ -14,10 +16,10 @@ const RegisterPage = () => {
 
   return (
     <>
-      <AuthHeader text1="Let's get started" text2="Create a new account" />
+      <AuthHeader text1={t('getStarted')} text2={t('createAcc')} />
       <RegisterForm />
-      <p className="text-dark mt-4 font-light">Already have an account?
-        <Link to='/login' className="text-accent2 hover:text-accent2-hover font-semibold"> Login</Link></p>
+      <p className="text-dark mt-4 font-light">{t('hasAccountQuestion')}
+        <Link to='/login' className="text-accent2 hover:text-accent2-hover font-semibold"> {t('login')}</Link></p>
     </>
   )
 }

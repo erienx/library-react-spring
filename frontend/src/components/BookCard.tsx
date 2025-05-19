@@ -1,6 +1,7 @@
 import { Book } from "../types/types"
 import FullStarIcon from "../assets/stars/star-full-icon.svg?react";
 import { Link } from "react-router-dom";
+import { Trans } from 'react-i18next';
 
 type BookCardProps = {
   book: Book;
@@ -22,8 +23,9 @@ const BookCard = ({ book }: BookCardProps) => {
 
         <div className='flex flex-row items-center flex-wrap gap-1 mt-auto'>
           <p className='text-gray-300'>
-            Rented <span className='text-white font-bold'>{book.rentedCount}</span> times
-          </p>
+            <Trans i18nKey="rentedTimes" count={book.rentedCount} values={{ count: book.rentedCount }} components={{ 1: <b /> }} />
+
+          </p>  
 
           <span className='text-sm text-slate-200'>•</span>
 

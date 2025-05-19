@@ -6,8 +6,10 @@ import { useHasAccess } from "../../hooks/useHasAccess";
 import AdminSelect from "../ui/AdminSelect";
 import UpperHeaderLink from "../ui/UpperHeaderLink";
 import LanguageOptions from "../ui/LanguageOptions";
+import { useTranslation } from "react-i18next";
 
 const UpperHeader = () => {
+    const { t } = useTranslation();
     const { currentUser, handleLogout } = useAuth();
     const isAdmin = useHasAccess(['admin']);
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ const UpperHeader = () => {
 
                 <div className="text-white text-sm sm:text-2xl min-h-[28px]">
                     {currentUser && (
-                        <>Welcome, <span className="font-semibold">{currentUser.firstName} {currentUser.lastName}</span></>
+                        <>{t('welcome')}, <span className="font-semibold">{currentUser.firstName} {currentUser.lastName}</span></>
                     )}
                 </div>
 
@@ -33,18 +35,18 @@ const UpperHeader = () => {
 
                     {!currentUser && (
                         <>
-                            <UpperHeaderLink to="register" text="Register" />
-                            <UpperHeaderLink to="login" text="Log in" />
+                            <UpperHeaderLink to="register" text={t('register')} />
+                            <UpperHeaderLink to="login" text={t('login')} />
                         </>
                     )}
-                    {currentUser && <UpperHeaderLink to="orders" text="Orders" Icon={OrderIcon} />}
+                    {currentUser && <UpperHeaderLink to="orders" text={t('orders')} Icon={OrderIcon} />}
 
-                    {currentUser && <UpperHeaderLink to="cart" text="Items" Icon={CartIcon} />}
+                    {currentUser && <UpperHeaderLink to="cart" text={t('items')} Icon={CartIcon} />}
 
                     {currentUser && <button
                         onClick={logoutAndRedirect}
                         className="px-4 py-2 bg-bg-lighter text-white text-sm font-medium rounded-md shadow-md hover:bg-bg hover:text-accent1 transition cursor-pointer">
-                        Sign Out
+                        {t('signout')}
                     </button>}
                     <LanguageOptions />
                 </div>

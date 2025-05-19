@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Book } from '../types/types'
 import BookCard from './BookCard';
 import ButtonRegular from './ui/ButtonRegular';
@@ -9,6 +10,7 @@ type DisplayBookCardsProps = {
 }
 
 const DisplayBookCards = ({ books, onLoadMore, hasMore }: DisplayBookCardsProps) => {
+  const { t } = useTranslation();
 
 
   if (books.length <= 0)
@@ -21,8 +23,8 @@ const DisplayBookCards = ({ books, onLoadMore, hasMore }: DisplayBookCardsProps)
           <BookCard key={book.bookID} book={book} />
         ))}
       </ul>
-      <p className='text-slate-200 text-md text-center'>Displayed {books.length} {books.length == 1 ? "book" : "books"}</p>
-      {hasMore && <ButtonRegular text="LOAD MORE" onClick={onLoadMore} />}
+      <p className='text-slate-200 text-md text-center'>{t('displayedBooks', { count: books.length })}</p>
+      {hasMore && <ButtonRegular text={t('loadMore')} onClick={onLoadMore} />}
     </div>
   );
 };

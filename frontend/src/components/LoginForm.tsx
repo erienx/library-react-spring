@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./providers/AuthContext";
 import useFormDefinition from "../hooks/api/useFormDefinition";
 import { iconMap } from "../util/iconMap";
+import { useTranslation } from "react-i18next";
 
 
 export const LoginForm = () => {
     const navigate = useNavigate();
     const { fields, loading, schema } = useFormDefinition("login");
+    const { t } = useTranslation();
 
     const {
         register,
@@ -38,6 +40,7 @@ export const LoginForm = () => {
 
     if (loading) return <div>Loading form...</div>;
 
+
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
@@ -51,7 +54,7 @@ export const LoginForm = () => {
                     <FormInput
                         key={field.name}
                         type={field.type}
-                        placeholder={field.label}
+                        placeholder={t(field.name)}
                         register={register(field.name)}
                         value={val}
                         error={errors[field.name]}
@@ -61,7 +64,7 @@ export const LoginForm = () => {
                 );
             })}
 
-            <ButtonSubmit isSubmitting={isSubmitting} btnText="Log in" />
+            <ButtonSubmit isSubmitting={isSubmitting} btnText={t('login')} />
             <FormError error={errors.root} />
         </form>
     );

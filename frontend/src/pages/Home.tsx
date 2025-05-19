@@ -8,6 +8,7 @@ import DisplayBookCards from '../components/DisplayBookCards';
 import { HandleLoadingList } from '../components/HandleLoadingList';
 import SelectSort from '../components/ui/SelectSort';
 import SelectPageSize from '../components/ui/SelectPageSize';
+import { useTranslation } from 'react-i18next';
 
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
   const debouncedSearchInp = useDebounce(searchInp, 1000);
   const [sortBy, setSortBy] = useState("rating,desc");
   const { books, errorMsg, isLoading, hasMore } = useFetchBooks(debouncedSearchInp, page, size, sortBy);
+  const { t } = useTranslation();
 
   const loadMoreBooks = () => {
     setPage(prev => prev + 1);
@@ -32,10 +34,10 @@ const Home = () => {
         <section className="space-y-9">
           <h2 className="mt-[40px] text-2xl font-bold sm:text-3xl">
             <div className="flex flex-col sm:flex-row gap-y-5 sm:gap-x-3 justify-between items-center">
-              <span className="text-gradient sm:order-1 text-4xl">All books</span>
+              <span className="text-gradient sm:order-1 text-4xl">{t('allBooks')}</span>
               <div className="flex flex-col sm:flex-row items-center gap-y-3 sm:gap-x-3 sm:order-2 w-full sm:w-auto">
                 <div className="flex flex-col sm:flex-row items-center gap-y-2 sm:gap-x-2 w-full sm:w-auto">
-                  <p className="font-medium sm:text-2xl text-xl text-white">Sort by: </p>
+                  <p className="font-medium sm:text-2xl text-xl text-white">{t('sortBy')}</p>
                   <SelectSort sortBy={sortBy} handleSortChange={(val) => {
                     setSortBy(val);
                     setPage(0);
@@ -43,7 +45,7 @@ const Home = () => {
                   />
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-y-2 sm:gap-x-2 w-full sm:w-auto">
-                  <p className="font-medium sm:text-2xl text-xl text-white">Books per page:</p>
+                  <p className="font-medium sm:text-2xl text-xl text-white">{t('booksPerPage')}</p>
                   <SelectPageSize size={size} handleSizeChange={(val) => {
                     setSize(val);
                     setPage(0);

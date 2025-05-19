@@ -5,6 +5,7 @@ import { useAuth } from "../providers/AuthContext";
 import { useHasAccess } from "../../hooks/useHasAccess";
 import AdminSelect from "../ui/AdminSelect";
 import UpperHeaderLink from "../ui/UpperHeaderLink";
+import LanguageOptions from "../ui/LanguageOptions";
 
 const UpperHeader = () => {
     const { currentUser, handleLogout } = useAuth();
@@ -15,6 +16,7 @@ const UpperHeader = () => {
         await handleLogout();
         navigate('/');
     };
+
 
     return (
         <header className="w-full bg-bg px-4 sm:px-10 py-4 border-b border-bg-lighter shadow-sm">
@@ -44,6 +46,7 @@ const UpperHeader = () => {
                         className="px-4 py-2 bg-bg-lighter text-white text-sm font-medium rounded-md shadow-md hover:bg-bg hover:text-accent1 transition cursor-pointer">
                         Sign Out
                     </button>}
+                    <LanguageOptions />
                 </div>
             </div>
         </header >

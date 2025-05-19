@@ -1,6 +1,7 @@
-import { Link, NavLink } from 'react-router-dom';
-import LogoIcon from '../../assets/logo-icon.svg?react';
+import {  NavLink } from 'react-router-dom';
+
 import { useTranslation } from 'react-i18next';
+import HomeButton from '../ui/HomeButton';
 
 const LowerHeader = () => {
   const { t } = useTranslation();
@@ -21,10 +22,7 @@ const LowerHeader = () => {
   return (
     <>
       <header className='flex flex-col sm:flex-row justify-between items-center px-4 sm:px-14 py-3 flex-wrap  gap-y-12 sm:gap-y-8 '>
-        <Link to='/' className="flex gap-3 items-center mr-12">
-          <LogoIcon />
-          <h4 className="font-bold text-txt text-2xl">{t('title')}</h4>
-        </Link>
+        <HomeButton/>
 
         <nav className="flex gap-6 sm:gap-10 lg:gap-16 items-center ">
           {options.map((opt, index) => ( //index is fine as a key cause static array

@@ -1,16 +1,15 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import EmailIcon from "../assets/email-icon.svg?react";
-import PasswordIcon from "../assets/password-icon.svg?react";
-import ProfileIcon from "../assets/profile-icon.svg?react"
 import FormError from "../components/ui/FormError";
 import ButtonSubmit from "../components/ui/ButtonSubmit";
 import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router-dom";
 import addMember from "../hooks/api/addMember";
 import { useAuth } from "./providers/AuthContext";
+import useFormDefinition from "../hooks/api/useFormDefinition";
+import { iconMap } from "../util/iconMap";
 
 
 const schema = z
@@ -26,99 +25,70 @@ const schema = z
         message: "Passwords do not match",
     });
 
-type FormFields = z.infer<typeof schema>;
 
 export const RegisterForm = () => {
-    const {
-        register,
-        handleSubmit,
-        setError,
-        watch,
-        reset,
-        formState: { errors, isSubmitting },
-    } = useForm<FormFields>({
-        resolver: zodResolver(schema),
-    });
-    const firstNameValue = watch("firstName");
-    const lastNameValue = watch("lastName");
-    const emailValue = watch("email");
-    const passwordValue = watch("password");
-    const confirmPasswordValue = watch("confirmPassword");
+  const navigate = useNavigate();
+  const { fields, loading, schema } = useFormDefinition("register");
 
-    const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    watch,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
 
-    const { handleLogin } = useAuth();
+  const { handleLogin } = useAuth();
 
-    const onSubmit: SubmitHandler<FormFields> = async (data) => {
-        try {
-            await addMember(data);
-            await handleLogin(data.email, data.password);
+  const onSubmit = async (data: any) => {
+    try {
+      await addMember(data);
+      await handleLogin(data.email, data.password);
+      reset();
+      navigate("/");
+    } catch (err) {
+      setError("root", {
+        message:
+          err instanceof Error
+            ? err.message
+            : "An unexpected error occurred",
+      });
+    }
+  };
 
-            reset();
-            navigate("/");
-        } catch (err) {
-            if (err instanceof Error) {
-                setError("root", {
-                    message: err.message,
-                });
-            } else {
-                setError("root", {
-                    message: "An unexpected error occurred",
-                });
-            }
-        }
-    };
+  if (loading) return <div>Loading form...</div>;
 
-    return (
-        <form
-            className="flex flex-col gap-y-3 rounded-2xl min-w-[200px] xs:min-w-[400px] text-blue"
-            onSubmit={handleSubmit(onSubmit)}
-        >
-            <FormInput
-                Icon={ProfileIcon}
-                type="text"
-                placeholder="First Name"
-                value={firstNameValue}
-                register={register("firstName")}
-                error={errors.firstName}
-            />
-            <FormInput
-                Icon={ProfileIcon}
-                type="text"
-                placeholder="Last Name"
-                value={lastNameValue}
-                register={register("lastName")}
-                error={errors.lastName}
-            />
-            <FormInput
-                Icon={EmailIcon}
-                type="text"
-                placeholder="Email"
-                value={emailValue}
-                register={register("email")}
-                error={errors.email}
-            />
-            <FormInput
-                Icon={PasswordIcon}
-                type="password"
-                placeholder="Password"
-                value={passwordValue}
-                register={register("password")}
-                error={errors.password}
-            />
-            <FormInput
-                Icon={PasswordIcon}
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPasswordValue}
-                register={register("confirmPassword")}
-                error={errors.confirmPassword}
-            />
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-y-3 rounded-2xl min-w-[200px] xs:min-w-[400px] text-blue"
+    >
+      {fields.map((field) => {
+        const val = watch(field.name);
+        const Icon = iconMap[field.icon] || (() => null);
 
-            <ButtonSubmit isSubmitting={isSubmitting} btnText="Register" />
-            <FormError error={errors.root} />
-        </form>
-    );
+        return (
+          <FormInput
+            key={field.name}
+            type={field.type}
+            placeholder={field.label}
+            value={val}
+            register={register(field.name)}
+            error={errors[field.name]}
+            Icon={Icon}
+            showToggle={field.type === "password"}
+          />
+        );
+      })}
+
+      <ButtonSubmit isSubmitting={isSubmitting} btnText="Register" />
+      <FormError error={errors.root} />
+    </form>
+  );
 };
+
 
 export default RegisterForm;

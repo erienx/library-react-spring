@@ -11,7 +11,7 @@ type FormInputProps = {
   placeholder: string;
   register: UseFormRegisterReturn;
   value?: string;
-  error?: FieldError;
+  error?: any;
   showToggle?: boolean;
 }
 

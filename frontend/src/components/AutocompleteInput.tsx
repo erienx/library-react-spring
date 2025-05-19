@@ -11,7 +11,7 @@ type AutocompleteInputProps = {
     register: UseFormRegisterReturn;
     value?: string;
     setValue: (val: string) => void;
-    error?: FieldError;
+    error?: any;
     suggestions: string[];
 };
 

@@ -39,11 +39,11 @@ public class BookService {
                 .publicationYear(bookRequest.publicationYear())
                 .author(author)
                 .category(cat)
-                .rating(bookRequest.rating())
+                .rating(4.0)
                 .publisher(publisher)
                 .pathToCover(bookRequest.pathToCover())
                 .pages(bookRequest.pages())
-                .rentedCount(bookRequest.rentedCount())
+                .rentedCount(0)
                 .build();
         book = bookRepository.save(book);
         bookCopyService.addBookCopies(book, bookRequest.copyCount());

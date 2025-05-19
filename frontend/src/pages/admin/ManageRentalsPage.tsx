@@ -10,7 +10,6 @@ import useFetchMembersByFields from "../../hooks/api/useFetchMemberIdByFields";
 import useFetchOrders from "../../hooks/api/useFetchOrders";
 import ButtonRegular from "../../components/ui/ButtonRegular";
 import EmailIcon from "../../assets/email-icon.svg?react";
-import { Icon } from "@radix-ui/react-select";
 
 const ManageRentalsPage = () => {
     const { currentUser, authToken, loading: userLoading } = useAuth();

@@ -40,3 +40,12 @@ export type Order = {
     createdAt: string;
     books: Book[];
 };
+
+export type FieldDefinition = {
+  name: string;
+  type: string;
+  label: string;
+  required: boolean;
+  validation?: Record<string, any>;
+  icon:string;
+};

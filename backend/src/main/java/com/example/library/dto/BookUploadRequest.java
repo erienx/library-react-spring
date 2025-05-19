@@ -19,8 +19,6 @@ public record BookUploadRequest(
         @Min(value = 1, message = "Pages should be greater than 0")
         Integer pages,
 
-        @Min(value = 0, message = "Rented count should be greater than or equal to 0")
-        Integer rentedCount,
 
         @NotBlank(message = "Publisher is required")
         String publisher,
@@ -28,9 +26,6 @@ public record BookUploadRequest(
         @NotBlank(message = "Category is required")
         String category,
 
-        @DecimalMin(value = "0.0", message = "Rating must be greater or equal to 0")
-        @DecimalMax(value = "5.0", message = "Rating must be less than or equal to 5")
-        Double rating,
 
         @Min(value = 1, message = "Copy count must be at least 1")
         Long copyCount

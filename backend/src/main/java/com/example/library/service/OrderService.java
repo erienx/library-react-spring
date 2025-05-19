@@ -78,6 +78,10 @@ public class OrderService {
             case PENDING -> {
                 order.setStatus(OrderStatus.RENTED);
                 order.setRentedAt(LocalDateTime.now());
+                order.getOrderItems().forEach(item -> {
+                    Book book = item.getBookCopy().getBook();
+                    book.setRentedCount(book.getRentedCount()+1);
+                });
             }
             case RENTED -> {
                 order.setStatus(OrderStatus.COMPLETED);

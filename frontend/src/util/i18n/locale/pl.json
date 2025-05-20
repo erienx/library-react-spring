@@ -139,5 +139,6 @@
   "prev": "Poprzednia",
   "next": "Następna",
   "page": "Strona",
-  "manageRentals": "Zarządzaj zamówieniami"
+  "manageRentals": "Zarządzaj zamówieniami",
+  "adminActions": "Admin"
 }

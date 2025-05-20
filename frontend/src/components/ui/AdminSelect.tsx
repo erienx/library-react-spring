@@ -12,7 +12,7 @@ const ADMIN_ROUTES = [
 const AdminSelect = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const selectedValue = useMemo(() => {
         return ADMIN_ROUTES.includes(location.pathname) ? location.pathname : "";
@@ -27,7 +27,7 @@ const AdminSelect = () => {
             <Select.Trigger
                 className="cursor-pointer inline-flex items-center justify-between rounded-md px-4 py-2 bg-bg-lighter text-white text-sm font-medium shadow-md hover:bg-bg hover:text-accent1 transition"
                 aria-label="Admin">
-                <Select.Value placeholder="Admin Actions" />
+                <Select.Value placeholder={t('adminActions')} />
                 <Select.Icon>
                     <ChevronDownIcon className="ml-2 h-4 w-4" />
                 </Select.Icon>

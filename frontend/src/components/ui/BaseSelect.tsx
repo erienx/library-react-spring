@@ -1,5 +1,6 @@
 import * as Select from '@radix-ui/react-select';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { useTranslation } from 'react-i18next';
 
 type BaseSelectOption = {
   label: string;
@@ -14,6 +15,7 @@ type BaseSelectProps = {
 };
 
 const BaseSelect = ({ value, onChange, placeholder, options }: BaseSelectProps) => {
+  const { t } = useTranslation();
   return (
     <Select.Root value={value} onValueChange={onChange}>
       <Select.Trigger
@@ -34,7 +36,7 @@ const BaseSelect = ({ value, onChange, placeholder, options }: BaseSelectProps) 
               value={value}
               className="hover:bg-bg-lighter2 text-sm px-4 py-2 rounded cursor-pointer outline-none select-none"
             >
-              <Select.ItemText>{label}</Select.ItemText>
+              <Select.ItemText>{String(t(label.toLowerCase())).charAt(0).toUpperCase() + String(label.toLowerCase()).slice(1)}</Select.ItemText>
             </Select.Item>
           ))}
         </Select.Viewport>

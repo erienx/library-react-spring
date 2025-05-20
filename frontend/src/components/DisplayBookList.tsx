@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Book } from "../types/types";
 import BookCardLine from "./BookCardLine";
 
@@ -7,9 +8,10 @@ type Props = {
 };
 
 const DisplayBookList = ({ books, onRemove }: Props) => {
+    const { t } = useTranslation();
 
     if (books.length === 0) {
-        return <p className="text-white text-center">Your cart is empty.</p>;
+        return <p className="text-white text-center">{t('emptyCart')}</p>;
     }
 
     return (

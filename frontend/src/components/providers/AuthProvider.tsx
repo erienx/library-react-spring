@@ -20,7 +20,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
                 setAuthToken(accessToken);
                 const user = await getMe(accessToken);
                 setCurrentUser(user);
-                console.log("REFRESH SUCCESS", user);
             } catch (err) {
                 setAuthToken(null);
                 setCurrentUser(null);
@@ -53,7 +52,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ authToken, currentUser, handleLogin, handleLogout , loading}}>
+        <AuthContext.Provider value={{ authToken, currentUser, handleLogin, handleLogout, loading }}>
             {children}
         </AuthContext.Provider>
     );

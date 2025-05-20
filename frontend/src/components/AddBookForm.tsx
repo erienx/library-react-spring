@@ -15,6 +15,7 @@ import ButtonSubmit from "./ui/ButtonSubmit";
 import FormError from "./ui/FormError";
 import useFormDefinition from "../hooks/api/useFormDefinition";
 import { iconMap } from "../util/iconMap";
+import { useTranslation } from "react-i18next";
 
 
 const AddBookForm = () => {
@@ -26,6 +27,7 @@ const AddBookForm = () => {
     const { items: publishers } = useFetchItems({ endpointType: "publishers" });
 
     const [file, setFile] = useState<File | null>(null);
+    const { t } = useTranslation();
 
     const {
         register,
@@ -71,11 +73,11 @@ const AddBookForm = () => {
             reset();
             navigate("/");
         } catch {
-            setError("root", { message: "Failed to add book." });
+            setError("root", { message: t('failedtoAddBook') });
         }
     };
 
-    if (loading) return <div>Loading form...</div>;
+    if (loading) return <div>{t('loadingForm')}</div>;
 
     return (
         <form
@@ -94,7 +96,7 @@ const AddBookForm = () => {
                         return (
                             <AutocompleteInput
                                 key={field.name}
-                                placeholder={field.label}
+                                placeholder={t(field.name)}
                                 register={register(field.name)}
                                 value={val}
                                 setValue={(v: string) => setValue(field.name, v)}
@@ -138,7 +140,7 @@ const AddBookForm = () => {
                         <FormInput
                             key={field.name}
                             type={field.type}
-                            placeholder={field.label}
+                            placeholder={field.name === 'title' ? t('titleForm') : t(field.name)}
                             register={register(field.name)}
                             value={val}
                             error={errors[field.name]}
@@ -148,7 +150,7 @@ const AddBookForm = () => {
                 })}
             </AutocompleteProvider>
 
-            <ButtonSubmit isSubmitting={isSubmitting} btnText="Add Book" />
+            <ButtonSubmit isSubmitting={isSubmitting} btnText={t('addBook')} />
             <FormError error={errors.root} />
         </form>
     );

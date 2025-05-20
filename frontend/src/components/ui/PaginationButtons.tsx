@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 type PaginationButtonsProps = {
     currentPage: number;
@@ -10,12 +11,13 @@ type PaginationButtonsProps = {
 const PaginationButtons = ({ currentPage, totalPages, setCurrentPage, className }: PaginationButtonsProps) => {
     const handleNext = () => setCurrentPage((prev: number) => Math.min(prev + 1, totalPages));
     const handlePrev = () => setCurrentPage((prev: number) => Math.max(prev - 1, 0));
+    const { t } = useTranslation();
 
 
     return (
 
         <div className={`flex justify-center items-center gap-x-4 ${className}`} >
-            <div className="w-[70px] text-right">
+            <div className="w-[90px] text-right">
                 <button
                     onClick={handlePrev}
                     disabled={currentPage === 0}
@@ -25,12 +27,12 @@ const PaginationButtons = ({ currentPage, totalPages, setCurrentPage, className 
                             ? "text-slate-500 cursor-not-allowed"
                             : "text-accent1 hover:underline cursor-pointer"
                     )}>
-                    Previous
+                    {t('prev')}
                 </button>
             </div>
 
             <span className="text-sm text-white/90 font-medium text-center min-w-[70px]">
-                Page {currentPage + 1} / {totalPages}
+                {t('page')} {currentPage + 1} / {totalPages}
             </span>
 
             <div className="w-[70px] text-left">
@@ -43,7 +45,7 @@ const PaginationButtons = ({ currentPage, totalPages, setCurrentPage, className 
                             ? "text-slate-500 cursor-not-allowed"
                             : "text-accent1 hover:underline cursor-pointer"
                     )}>
-                    Next
+                    {t('next')}
                 </button>
             </div>
         </div >

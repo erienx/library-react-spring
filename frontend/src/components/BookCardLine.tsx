@@ -3,6 +3,7 @@ import { useCartActions } from "../hooks/useCartActions";
 import { Book } from "../types/types";
 import FullStarIcon from "../assets/stars/star-full-icon.svg?react";
 import RemoveButton from "./ui/RemoveButton";
+import { Trans } from "react-i18next";
 
 
 const BookCardLine = ({ book, onRemove }: { book: Book; onRemove?: () => void }) => {
@@ -24,10 +25,10 @@ const BookCardLine = ({ book, onRemove }: { book: Book; onRemove?: () => void })
 
                 <div className="flex flex-col gap-2 flex-1">
                     <h2 className="text-xl font-bold text-white">{book.title}</h2>
-                    <p className="text-gray-300">by {book.author.authorName}</p>
+                    <p className="text-gray-300">{book.author.authorName}</p>
                     <div className='flex flex-row items-center flex-wrap gap-1 mt-auto'>
                         <p className='text-gray-300'>
-                            Rented <span className='text-white font-bold'>{book.rentedCount}</span> times
+                            <Trans i18nKey="rentedTimes" count={book.rentedCount} values={{ count: book.rentedCount }} components={{ 1: <b /> }} />
                         </p>
 
                         <span className='text-sm text-slate-200'>•</span>

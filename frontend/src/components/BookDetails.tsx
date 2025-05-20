@@ -4,6 +4,7 @@ import DisplayBookCards from "./DisplayBookCards";
 import BookCover from "./ui/BookCover";
 import BookInfoSection from "./ui/BookInfoSection";
 import { HandleLoadingList } from "./HandleLoadingList";
+import { useTranslation } from "react-i18next";
 
 type BookDetailsProps = {
   book: Book;
@@ -11,8 +12,10 @@ type BookDetailsProps = {
 
 const BookDetails = ({ book }: BookDetailsProps) => {
   const { books: similarBooks, errorMsg: similarError, isLoading: isSimilarLoading } = useFetchBooksByCategory(book.category.categoryID, 9);
+  const { t } = useTranslation();
 
   const isPopular = book.rentedCount > 100;
+
 
 
   return (
@@ -27,7 +30,7 @@ const BookDetails = ({ book }: BookDetailsProps) => {
 
 
       <div className="flex flex-col gap-6 ">
-        <h2 className="text-4xl font-light text-white">More from <span className="font-bold text-gradient-header">{book.category.categoryName}</span> category</h2>
+        <h2 className="text-4xl font-light text-white">{t('moreFrom')} <span className="font-bold text-gradient-header">{book.category.categoryName}</span></h2>
         <HandleLoadingList
           isLoading={isSimilarLoading}
           items={similarBooks}

@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import * as Select from '@radix-ui/react-select';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ADMIN_ROUTES = [
     "/admin/add-book",
@@ -11,6 +12,7 @@ const ADMIN_ROUTES = [
 const AdminSelect = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const {t} = useTranslation();
 
     const selectedValue = useMemo(() => {
         return ADMIN_ROUTES.includes(location.pathname) ? location.pathname : "";
@@ -34,11 +36,11 @@ const AdminSelect = () => {
             <Select.Content className="z-50 bg-bg-lighter text-white rounded-md shadow-lg overflow-hidden border border-bg">
                 <Select.Viewport className="p-1">
                     <Select.Item value={ADMIN_ROUTES[0]} className="hover:bg-bg-lighter2 text-sm px-4 py-2 rounded cursor-pointer">
-                        <Select.ItemText>Add New Book</Select.ItemText>
+                        <Select.ItemText>{t('addNewBook')}</Select.ItemText>
                     </Select.Item>
 
                     <Select.Item value={ADMIN_ROUTES[1]} className="hover:bg-bg-lighter2 text-sm px-4 py-2 rounded cursor-pointer">
-                        <Select.ItemText>Manage Rentals</Select.ItemText>
+                        <Select.ItemText>{t('manageRentals')}</Select.ItemText>
                     </Select.Item>
                 </Select.Viewport>
             </Select.Content>

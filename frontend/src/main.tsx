@@ -5,8 +5,6 @@ import "./util/i18n/i18n.ts"
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import NotFoundPage from './pages/NotFoundPage.tsx'
 import MainLayout from './layouts/MainLayout.tsx'
-import AboutPage from './pages/AboutPage.tsx'
-import ContactPage from './pages/ContactPage.tsx'
 import AuthLayout from './layouts/AuthLayout.tsx'
 import LoginPage from './pages/LoginPage.tsx'
 import RegisterPage from './pages/RegisterPage.tsx'
@@ -31,14 +29,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />
       },
-      {
-        path: 'about',
-        element: <AboutPage />
-      },
-      {
-        path: 'contact',
-        element: <ContactPage />
-      },
+
       {
         path: 'book/:id',
         element: <BookPage />,

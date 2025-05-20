@@ -5,11 +5,11 @@ import ButtonRegular from './ui/ButtonRegular';
 
 type DisplayBookCardsProps = {
   books: Book[];
-  onLoadMore: () => void;
-  hasMore: boolean;
+  onLoadMore?: () => void;
+  hasMore?: boolean;
 }
 
-const DisplayBookCards = ({ books, onLoadMore, hasMore }: DisplayBookCardsProps) => {
+const DisplayBookCards = ({ books, onLoadMore = () => { }, hasMore }: DisplayBookCardsProps) => {
   const { t } = useTranslation();
 
 

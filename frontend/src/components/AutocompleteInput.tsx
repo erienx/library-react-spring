@@ -58,7 +58,7 @@ const AutocompleteInput = ({ Icon, placeholder, register, value, setValue, error
                     {...register}
                     type="text"
                     placeholder={placeholder}
-                    value={value}
+                    value={value ?? ""}
                     onChange={(e) => {
                         register.onChange(e);
                         state.onChange(e);

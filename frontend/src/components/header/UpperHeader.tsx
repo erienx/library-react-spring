@@ -41,7 +41,7 @@ const UpperHeader = () => {
                     )}
                     {currentUser && <UpperHeaderLink to="orders" text={t('orders')} Icon={OrderIcon} />}
 
-                    {currentUser && <UpperHeaderLink to="cart" text={t('items')} Icon={CartIcon} />}
+                    {currentUser && <UpperHeaderLink to="cart" text={t('cart')} Icon={CartIcon} />}
 
                     {currentUser && <button
                         onClick={logoutAndRedirect}

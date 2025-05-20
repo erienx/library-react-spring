@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import BaseSelect from './BaseSelect';
 
 type SelectOrderTypeProps = {
@@ -5,15 +6,16 @@ type SelectOrderTypeProps = {
     handleOrderTypeChannge: (value: string) => void;
 };
 
-const orderTypeOptions = [
-    { value: 'pending', label: 'Pending' },
-    { value: 'rented', label: 'Rented' },
-    { value: 'completed', label: 'Completed' },
-];
 
 const SelectOrderType = ({ orderType, handleOrderTypeChannge }: SelectOrderTypeProps) => {
+    const { t } = useTranslation();
+    const orderTypeOptions = [
+        { value: 'pending', label: t('pending') },
+        { value: 'rented', label: t('rented') },
+        { value: 'completed', label: t('completed') },
+    ];
     return (
-        <BaseSelect value={orderType} onChange={handleOrderTypeChannge} placeholder="Order Type" options={orderTypeOptions} />
+        <BaseSelect value={orderType} onChange={handleOrderTypeChannge} placeholder={t('orderType')} options={orderTypeOptions} />
     );
 };
 
